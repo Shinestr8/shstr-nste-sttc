@@ -1,0 +1,25 @@
+services:
+  backend:
+    image: node:12-alpine
+    # command: sh -c "npm install && npm run server"
+    container_name: backend
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    working_dir: /app
+    volumes:
+      - ./server:/app
+
+  # ai:
+  #   image: python:3.6
+  #   container_name: onobot
+  #   build:
+  #     context: ./test
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 8000:8000
+    # working_dir: /app
+    # volumes:
+    #   - ./test:/app

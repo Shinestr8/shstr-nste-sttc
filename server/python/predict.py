@@ -3,15 +3,24 @@ import numpy as np
 import tensorflow as tf
 import yt_dlp
 import sys 
+# import shutil
+import os
+
 
 #model name
 modelName = 'GTZANPretrainedCNN.h5'
 genres = ["blues", "classical", "country", "disco", "hiphop", "jazz", "metal", "pop", "reggae", "rock"]
 genres.sort()
 
+def clean(url):
+    video_url = url.split("&")[0]
+    video_id = video_url.split("=")[1]
+    filename = str("tmp/" + video_id + ".m4a")
+    os.remove(filename)
+
 
 def downloadSong(url):
-    orig_ext = ".webm"
+    # orig_ext = ".webm"
     video_url = url.split("&")[0]
     video_id = video_url.split("=")[1]
 
@@ -19,19 +28,28 @@ def downloadSong(url):
         url = video_url,download=False
     )
 
+    if(int(video_info["duration"]) > 600 ):
+        result = {"message": "song is too long"}
+        print(result)
+        sys.exit(0)
 
-    filename = str("tmp/" + video_id)
+    filename = str("tmp/" + video_id + ".m4a")
     # filename = 'tmp/music'
 
+    # options={
+    #     'format': 'bestaudio/best',
+    #     'postprocessors': [{
+    #         'key': 'FFmpegExtractAudio',
+    #         'preferredcodec': 'mp3',
+    #         'preferredquality': '192'
+    #     }],
+    #     'keepvideo':False,
+    #     'outtmpl':filename + orig_ext,
+    # }
     options={
-        'format': 'bestaudio/best',
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192'
-        }],
+        'format':'m4a',
         'keepvideo':False,
-        'outtmpl':filename + orig_ext,
+        'outtmpl':filename,
     }
 
     with yt_dlp.YoutubeDL(options) as ydl:
@@ -62,11 +80,8 @@ def processSong(songData):
 def predictInChunk(url):
     video_url = url.split("&")[0]
     video_id = video_url.split("=")[1]
-    filename = str("tmp/" + video_id + ".mp3")
+    filename = str("tmp/" + video_id + ".m4a")
     signal, sr = librosa.load(filename)
-    # if(signal.shape[0] > 13200000):
-    #     print("Song is too long")
-    #     return
     chunksize_minutes=2
     step = int(((chunksize_minutes*60)/1.5)*33000)
     subdivs = signal.shape[0]//step
@@ -93,9 +108,11 @@ def predictInChunk(url):
         del newUnique
         del newCounts
 
-    melspec = processSong(signal[subdivs*step:subdivs*step+rest])
-    prediction = np.argmax(CNN.predict(melspec), axis=-1) #predict the classes
-    
+    if(rest > 33000):
+        melspec = processSong(signal[subdivs*step:subdivs*step+rest])
+        prediction = np.argmax(CNN.predict(melspec), axis=-1) #predict the classes
+        del melspec
+
     newUnique, newCounts = np.unique(prediction, return_counts=True)
     totalUnique, idx = np.unique(np.hstack((totalUnique, newUnique)), return_inverse=True)
     totalCounts = np.bincount(idx, np.hstack((totalCounts, newCounts)))
@@ -120,36 +137,17 @@ def predictInChunk(url):
     }
 
     print(result)
-
-    # labels = []
-    # for i in totalUnique:
-    #     labels.append(genres[i])
-    
-    # zip_iterator = zip(labels, totalCounts)
-    # print(dict(zip_iterator))
-
-
-
-    #calculate percentage
-    
-    # for genre, count in zip(totalUnique, totalCounts):
-    #     stat = (count/total) * 100
-    #     print(labels[genre], " : ", "%.2f" % stat , "%")
-    
-    # print(subdivs+1, "\nmost probable : ", labels[totalUnique[higherGuess]])
-    del melspec
+    # del melspec
     
 def main():
-    # song="https://www.youtube.com/watch?v=NCWCVhIUigw"
-    song = sys.argv[1]
-    # song = "https://www.youtube.com/watch?v=lgh68Swuak0" #pachelbel, the nemesis
-    # song = "https://www.youtube.com/watch?v=7f1raKLLI5I" #7m10
-    # song = "https://www.youtube.com/watch?v=QxbJSe6ueoY" #10min
-    downloadSong(song)
-    predictInChunk(song)
+    ytURL = sys.argv[1]
+    # ytURL = 'https://www.youtube.com/watch?v=uczY1We-Eak'
+    downloadSong(ytURL)
+    
+    predictInChunk(ytURL)  
+    clean(ytURL)
+    
 
 
 if __name__ == '__main__':
     main()
-
-["blues", "classical", "country", "disco", "hiphop", "jazz", "metal", "pop", "reggae", "metal"]

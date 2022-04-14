@@ -31,21 +31,6 @@ app.get('/', (req, res) => {
  
 })
 
-app.get('/download', (req, res)=> {
-    const python = spawn('python', ['./python/predict.py', url]);
-    python.stdout.on('data', function(data){
-        console.log(data.toString());
-        rawOutput = data.toString();
-    })
-
-    python.on('close', function(code){
-        // console.log(`closed with code ${code}`);
-        console.log("predict close with code" + code);
-        // result = replaceAll(rawString, "'", '"')
-        res.json(JSON.parse(result))
-    })
-})
-
 app.get('/predict', (req, res) => {
     const url = req.query.url;
     console.log(url)

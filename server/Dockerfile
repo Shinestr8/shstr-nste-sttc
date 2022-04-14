@@ -15,6 +15,7 @@ RUN conda --version
 
 RUN conda install -c conda-forge librosa
 RUN conda install tensorflow
+RUN pip3 install yt_dlp
 
 WORKDIR /app
 

@@ -11,8 +11,6 @@ function replaceAll(string, search, replace) {
 
 app.get('/predict', (req, res) => {
     const url = req.query.url;
-    console.log(url)
-    // res.json(url)
     var result;
     const python = spawn('python', ['./python/predict.py', url]);
     python.stdout.on('data', function(data){

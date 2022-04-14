@@ -66,7 +66,7 @@ def predictInChunk(url):
     subdivs = signal.shape[0]//step #how many whole 2min chinks
     rest = signal.shape[0]%step #what remains after division
     
-    CNN = tf.keras.models.load_model('python/models2/GTZANPretrainedCNN.h5') #load the model
+    CNN = tf.keras.models.load_model('python/models/GTZANPretrainedCNN.h5') #load the model
     totalUnique = np.array([], dtype=int) #array that will store the genres detected
     totalCounts = np.array([], dtype=int) #array that will store the count of each genre
     for i in range(0, subdivs, 1):

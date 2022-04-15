@@ -116,6 +116,7 @@ def predictInChunk(url):
     output = {
         "guess": array,
         "higherGuess": bestGuess,
+        "higherCount": totalCounts[higherGuess],
         "total": total,
         "message": "success"
     }

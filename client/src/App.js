@@ -1,60 +1,23 @@
-import {useState} from "react";
 import './App.css';
-
+import { Predict } from "./components/Predict";
+import {BrowserRouter, Route, Routes} from "react-router-dom"
+import { Page } from "./components/Page";
+import { About } from './components/About';
+import { Test } from './components/Test';
+// import {Test} from "./components/Test"
 function App() {
 
-  const [youtubeURL, setYoutubeURL] = useState("");
-  const [data, setData] = useState({"guess":[{"name":"blues","count":3},{"name":"classical","count":8},{"name":"country","count":6},{"name":"disco","count":4},{"name":"hiphop","count":7},{"name":"jazz","count":1},{"name":"pop","count":151},{"name":"reggae","count":4},{"name":"rock","count":1}],"higherGuess":"pop","total":185,"message":"success"});
-
-  const [loading, setLoading] = useState(false)
-  function handleValueChange(e){
-    setYoutubeURL(e.target.value);
-  }
-
-  async function submitLink(e){
-    setData(null);
-    setLoading(true);
-    e.preventDefault();
-    const response = await fetch("/predict?url="+youtubeURL);
-    const newData = await response.json();
-    setData(newData);
-    setLoading(false);
-  }
-
   return (
-    <div id="page">
-
-    
-    <div id="content">
-      <form>
-        <input placeholder="youtube link" type="text" value={youtubeURL} onChange={handleValueChange}/>
-        <button type="submit" onClick={submitLink}>Submit</button>
-      </form>
-      {/* {youtubeURL && youtubeURL} */}
-      {loading && (<div>Processing your song...</div>)}
-      {data && data.message!=="success" &&(
-        <div>{data.message}</div>
-      )}
-      {data && data.message==="success" &&(
-        <div id="prediction">
-          <h2>Main prediction: {data.higherGuess}</h2>
-
-          <ul>
-
-          
-          {data.guess.map(function(genre, index){
-            return(
-              <li key={`genre-${index}`}>
-                {genre.name} {Math.round(10000*genre.count/data.total)/100}%
-              </li>
-            )
-          })}
-          </ul>
-        </div>
-      )}
-    </div>
-    </div>
-  );
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Page/>}>
+          <Route path="/" element={<Predict/>}/>
+          <Route path="about" element={<About/>}/>
+        </Route>
+        <Route path="test" element={<Test/>}/>
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App;

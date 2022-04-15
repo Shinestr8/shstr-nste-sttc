@@ -5,6 +5,124 @@ html, body, #root{
   background: linear-gradient(to bottom right, #7b4397, #dc2430);
 }
 
+#logo{
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0.2rem;
+  padding-left: 1rem;
+  
+}
+
+#page{
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 10% 1fr;
+}
+
+.navlink{
+  display: flex;
+  width: 8%;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 1rem;
+}
+
+#main-header{
+  /* background-color: #FAF; */
+  background-color: #1C3041;
+  /* color: #000; */
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  /* background: linear-gradient(to bottom right, #FAF, #dc2430); */
+}
+
+a:visited{
+  color: #ffffff;
+}
+
+#main-content{
+  background-color: #ffd1ff;
+  padding: 1rem;
+}
+
+#predict{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+  align-items: center;
+}
+
+#predict>form{
+  width: 80%;
+  height: 2.5rem;
+}
+
+input[type="text"]{
+  height: 100%;
+  width: 80%;
+  box-sizing: border-box;
+  border: none;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+button{
+  box-sizing: border-box;
+  height: 100%;
+  width: 20%;
+  border: none;
+  cursor: pointer;
+  background-color: #61A0AF;
+  color: #ffffff;
+  font-weight: bold;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+#prediction{
+  border-radius: 15px;
+  margin-top: 2rem;
+  background-color: #ffffff;
+  width: 80%;
+  text-align: center;
+}
+
+.genre{
+  font-size: medium;
+}
+
+.top-0{
+  font-size: xx-large;
+  font-weight: bolder;
+}
+
+.top-1{
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.top-2{
+  font-size: large;
+  font-weight: bold;
+}
+
+
+
+ul{
+  list-style-type: none;
+}
+/* 
+#main-header{
+  width: 100%;
+  height: 10%;
+}
+
 #root{
   height: 100%;
   display: flex;
@@ -17,9 +135,9 @@ html, body, #root{
   flex-direction: column;
   margin: auto;
   width: fit-content;
-}
+} */
 
-#root>div{
+/* #root>div{
   width: 50%;
   margin: auto;
   background-color: white;
@@ -55,4 +173,4 @@ input:focus{
   box-sizing: border-box;
   width: 10%;
   height: 2rem;
-}
+} */

@@ -20,9 +20,14 @@ def clean(url):
 def downloadSong(url):
     video_id = url.split("=")[1] #parse URL and keep video ID, will be used as filename
 
-    video_info = yt_dlp.YoutubeDL().extract_info(
-        url = url,download=False
-    )
+    try:
+        video_info = yt_dlp.YoutubeDL().extract_info(
+            url = url,download=False
+        )
+    except:
+        output = {"message": "failed to download URL. Is it a valid youtube link?"}
+        print(output)
+        sys.exit(0)
 
     #ignore videos that are longer than 10min
     if(int(video_info["duration"]) > 600 ):

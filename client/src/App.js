@@ -32,7 +32,10 @@ function App() {
       </form>
       {/* {youtubeURL && youtubeURL} */}
       {loading && (<div>Processing your song...</div>)}
-      {data &&(
+      {data && data.message!=="success" &&(
+        <div>{data.message}</div>
+      )}
+      {data && data.message==="success" &&(
         <div id="prediction">
           <h2>Main prediction: {data.higherGuess}</h2>
 

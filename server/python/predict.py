@@ -105,6 +105,8 @@ def predictInChunk(url):
     for i in range(len(totalUnique)):
         array.append({"name": genres[totalUnique[i]], "count": totalCounts[i]})
 
+    array = sorted(array, key=lambda d: d['count'], reverse=True) 
+
     #count total chunks
     total = 0
     for c in totalCounts:

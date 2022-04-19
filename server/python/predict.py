@@ -93,6 +93,7 @@ def predictInChunk(url):
     if(rest > 33000):
         melspec = processSong(signal[subdivs*step:subdivs*step+rest])
         prediction = np.argmax(CNN.predict(melspec), axis=-1) #predict the classes
+        totalPrediction.extend(prediction)
         del melspec
         newUnique, newCounts = np.unique(prediction, return_counts=True)
         totalUnique, idx = np.unique(np.hstack((totalUnique, newUnique)), return_inverse=True)

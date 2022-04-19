@@ -22,9 +22,12 @@ html, body, #root{
 
 .navlink{
   display: flex;
-  width: 8%;
+  /* width: 8%; */
   align-items: center;
   justify-content: space-between;
+}
+
+.navlink a{
   margin-right: 1rem;
 }
 
@@ -72,6 +75,7 @@ input[type="text"]{
   border-top-left-radius: 15px;
 }
 
+
 button{
   box-sizing: border-box;
   height: 100%;
@@ -88,9 +92,14 @@ button{
 #prediction{
   border-radius: 15px;
   margin-top: 2rem;
+  height: 100%;
   background-color: #ffffff;
   width: 80%;
   text-align: center;
+  display: grid;
+  height: 100%;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50vh 50vh;
 }
 
 .genre{
@@ -112,65 +121,50 @@ button{
   font-weight: bold;
 }
 
+#prediction .top-left{
+  grid-column: 1;
+  grid-row: 1;
+  border-right: 1px solid lightblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#prediction .top-right{
+  grid-column: 2/3;
+  grid-row: 1/2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#prediction .bottom{
+  grid-column: 1/3;
+  grid-row: 2/3;
+  border-top: 1px solid lightblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 
 ul{
   list-style-type: none;
 }
-/* 
-#main-header{
-  width: 100%;
-  height: 10%;
+
+@media screen and (max-width: 1024px) {
+  #predict>form{
+    width: 100%;
+  }
+
+  #prediction{
+    width: 100%;
+    /* align-items: flex-start; */
+  }
+
+  #main-content{
+    padding: 0;
+  }
 }
 
-#root{
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
-#prediction{
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  width: fit-content;
-} */
-
-/* #root>div{
-  width: 50%;
-  margin: auto;
-  background-color: white;
-  border-radius: 5px;
-  padding: 1rem;
-}
-
-#root>div input{
-  width: 50%;
-  height: 2rem;
-  box-sizing: border-box;
-  color: #999;
-  border: none;
-  border-bottom: 1px solid #999 ;
-
-}
-
-input:focus{
-  outline: 1px solid lightblue
-}
-
-#root form{
-  display: flex;
-  justify-content: center;
-}
-
-#root>div button{
-  background-color: #BF2D4E;
-  color: #ffffff;
-  border: none;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  box-sizing: border-box;
-  width: 10%;
-  height: 2rem;
-} */

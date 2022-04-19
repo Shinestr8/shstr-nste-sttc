@@ -1,13 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 function CustomTooltip({active, payload, label, genres}){
     console.log(payload)
     if (active && payload && payload.length) {
         return (
           <div className="custom-tooltip">
-            {/* <p className="label">{`${label} : ${payload[0].value}`}</p>
-            <p className="intro">{label}</p> */}
             <p>Time: {formatTime(label)}</p>
             <p>Genre: {genres[payload[0].value]}</p>
           </div>
@@ -16,15 +14,12 @@ function CustomTooltip({active, payload, label, genres}){
 }
 
 function formatTime(value){
-    // if(value > 60){
         let minutes = Math.floor(value/60);
         let seconds = Math.floor(value%60);
         if(seconds < 10){
             seconds = "0" + seconds
         }
         return `${minutes}:${seconds}`
-    // }
-    // return Math.floor(value);
 }
 
 export function Histogram({rawData}){
@@ -48,16 +43,7 @@ export function Histogram({rawData}){
                 genre: genres[rawData[i]],
                 time: i*1.5
             }
-            // newData.sort(function(a, b){
-            //     let keyA = a.index;
-            //     let keyB = b.index;
-            //     if(keyA < keyB) return -1;
-            //     if(keyA > keyB) return 1;
-            //     return 0;
-            // })
             newData.push(newEntry);
-            
-            // console.log(i);
         }
         setData(newData)
     }, [rawData, genres])
@@ -68,10 +54,6 @@ export function Histogram({rawData}){
 
     function xFormatter(value){
         return formatTime(value)
-    }
-
-    function tooltipFormatter(x){
-        return <div>{genres[x]}</div>
     }
 
     return(
@@ -95,13 +77,11 @@ export function Histogram({rawData}){
                 name="genre" 
                 type="monotone" 
                 dataKey="index"
-                // strokeDasharray="3 3"
                 stroke="#1c3041" 
-                // dot={<CustomDot/>   }
-                activeDot={{ r: 8 }}
+                activeDot={{ r: 8, fill:"#faf" }}
                 dot={{ fill: "#FAF", stroke: '#1C3041', strokeWidth: 2, r: 4,strokeDasharray:' '}}
             />
-              {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
+    
             </LineChart>
           </ResponsiveContainer>    
             

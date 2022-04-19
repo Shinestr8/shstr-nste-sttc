@@ -1,7 +1,7 @@
 import {useState} from "react";
 import '../App.css';
 import { Histogram } from "./Histogram";
-
+import { GenreRadarChart } from "./GenreRadarChart";
    
 
 export function Predict(){
@@ -46,7 +46,6 @@ export function Predict(){
                 
                         <div className="top-left">
                             <ul>
-                            
                             {data.guess.map(function(genre, index){
                                 return(
                                 <li key={`genre-${index}`} className={`genre top-${index}`}>
@@ -55,9 +54,19 @@ export function Predict(){
                                 )
                             })}
                             </ul>
+                            <div>
+                                <img 
+                                    className="genre-icon"
+                                    src={`${process.env.PUBLIC_URL}/images/genres/${data.higherGuess}.svg`} 
+                                    alt={data.higherGuess}
+                                    title={data.higherGuess}
+                                />
+                                <div>{capitalizeFirstLetter(data.higherGuess)}</div>
+                            </div>    
+                            
                         </div>
                         <div className="top-right">
-                            <div>Pie Chart</div>
+                            <GenreRadarChart data={data}/>
                         </div>
                         <div className="bottom">
                             <Histogram rawData={data.rawData}/>

@@ -74,12 +74,13 @@ def predictInChunk(url):
     CNN = tf.keras.models.load_model('python/models/GTZANPretrainedCNN.h5') #load the model
     totalUnique = np.array([], dtype=int) #array that will store the genres detected
     totalCounts = np.array([], dtype=int) #array that will store the count of each genre
+    totalPrediction = []
     for i in range(0, subdivs, 1):
         start = i*step
         end = start + step
         melspec = processSong(signal[start:end])
         prediction = np.argmax(CNN.predict(melspec), axis=-1) #predict the classes
-        
+        totalPrediction.extend(prediction)
         #add the predicted class to the total
         newUnique, newCounts = np.unique(prediction, return_counts=True)
         totalUnique, idx = np.unique(np.hstack((totalUnique, newUnique)), return_inverse=True)
@@ -118,9 +119,9 @@ def predictInChunk(url):
         "higherGuess": bestGuess,
         "higherCount": totalCounts[higherGuess],
         "total": total,
-        "message": "success"
+        "message": "success",
+        "rawData": totalPrediction
     }
-
     print(output)
     
 def main():

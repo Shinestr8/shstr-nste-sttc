@@ -1,11 +1,12 @@
 import {useState} from "react";
 import '../App.css';
+import { Histogram } from "./Histogram";
 
    
 
 export function Predict(){
     const [youtubeURL, setYoutubeURL] = useState("");
-    const [data, setData] = useState({"guess":[{"name":"pop","count":109},{"name":"hiphop","count":31},{"name":"country","count":11},{"name":"classical","count":7},{"name":"rock","count":6},{"name":"disco","count":3},{"name":"metal","count":2},{"name":"jazz","count":1},{"name":"reggae","count":1}],"higherGuess":"pop","higherCount":109,"total":171,"message":"success"});
+    const [data, setData] = useState({"guess":[{"name":"hiphop","count":68},{"name":"pop","count":45},{"name":"classical","count":10},{"name":"country","count":4},{"name":"disco","count":4},{"name":"jazz","count":2},{"name":"rock","count":2},{"name":"reggae","count":1}],"higherGuess":"hiphop","higherCount":68,"total":136,"message":"success","rawData":[1,1,1,1,1,1,1,1,1,4,4,7,3,7,4,7,4,7,7,7,4,7,7,7,7,7,7,4,4,4,4,4,4,4,7,4,4,7,4,7,7,7,7,7,7,7,7,4,7,4,4,4,4,7,4,7,7,4,7,7,4,7,4,7,5,2,5,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,8,7,2,7,3,7,7,3,9,7,7,7,7,7,7,7,7,7,7,4,7,2,4,4,4,3,4,4,4,4,9,4,4,4,1]});
 
     const [loading, setLoading] = useState(false)
     function handleValueChange(e){
@@ -59,7 +60,7 @@ export function Predict(){
                             <div>Pie Chart</div>
                         </div>
                         <div className="bottom">
-                            <div>Histogramme</div>
+                            <Histogram rawData={data.rawData}/>
                         </div>
 
                 

@@ -1,6 +1,6 @@
 services:
   backend:
-    image: node:12-alpine
+    image: onobot
     # command: sh -c "npm install && npm run server"
     container_name: backend
     build: 

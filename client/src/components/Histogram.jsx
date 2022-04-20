@@ -31,14 +31,10 @@ export function Histogram({rawData}){
     useEffect(function(){
         let newData = [];
         let newEntry = {};
-        let existingGenres = [];
         for(let i = 0; i < rawData.length; ++i){
-            if(!existingGenres.includes(genres[rawData[i]])){
-                existingGenres.push(genres[rawData[i]]);
-            }
+          console.log(`entry number ${i} is ${rawData[i]}`)
             newEntry = {
-                index: rawData[i],
-                genre: genres[rawData[i]],
+                genre: rawData[i],
                 time: i*1.5
             }
             newData.push(newEntry);
@@ -47,13 +43,14 @@ export function Histogram({rawData}){
     }, [rawData, genres])
 
     function yFormatter(value){
+        console.log(value);
         return(`${genres[value]}`);
     }
 
     function xFormatter(value){
         return formatTime(value)
     }
-
+    
     return(
         <div id="histogram">
         {data && (
@@ -68,13 +65,13 @@ export function Histogram({rawData}){
               }}
             >
               <XAxis dataKey="time" tickFormatter={xFormatter}/>
-              <YAxis tickCount={10} dataKey="index" name="genre" tickFormatter={yFormatter} />
+              <YAxis tickCount={10} domain={[0, 9]} tickFormatter={yFormatter} />
               <Tooltip content={<CustomTooltip genres={genres}/>}/>
               <Line 
                 isAnimationActive={false}
-                name="genre" 
+                // name="genre" 
                 type="monotone" 
-                dataKey="index"
+                dataKey="genre"
                 stroke="#1c3041" 
                 activeDot={{ r: 8, fill:"#faf" }}
                 dot={{ fill: "#FAF", stroke: '#1C3041', strokeWidth: 2, r: 4,strokeDasharray:' '}}

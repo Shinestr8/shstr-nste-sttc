@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 function CustomTooltip({active, payload, label, genres}){
-    console.log(payload)
     if (active && payload && payload.length) {
         return (
           <div className="custom-tooltip">
@@ -23,7 +22,6 @@ function formatTime(value){
 }
 
 export function Histogram({rawData}){
-
     const genres = useMemo(function(){
         return ["Blues", "Classical", "Country", "Disco", "Hiphop", "Jazz", "Metal", "Pop", "Reggae", "Rock"];
     }, [])

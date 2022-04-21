@@ -74,8 +74,7 @@ input[type="text"]{
   border-top-left-radius: 15px;
 }
 
-
-button{
+form button{
   box-sizing: border-box;
   height: 100%;
   width: 20%;
@@ -86,6 +85,10 @@ button{
   font-weight: bold;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
+}
+
+form button:disabled{
+  background-color: grey;
 }
 
 .genre{
@@ -120,9 +123,35 @@ button{
   /* grid-template-rows: 50vh; */
 }
 
+#prediction .top{
+  grid-column: 1/3;
+  grid-row: 1;
+  border-bottom: 3px solid #FFD1FF;
+  padding: 1rem;
+  display: flex;
+  height: 1.1rem;
+  line-height: 1.1rem;
+  justify-content: center;
+}
+
+#prediction .top button{
+  font-size: 1rem;
+  vertical-align: text-bottom;
+  border: none;
+  /* font-weight: bold; */
+  cursor: pointer;
+  /* width: 15%; */
+  background-color: transparent;
+  color: #61A0AF; 
+}
+
+#prediction .top button:hover{
+  text-decoration: underline;
+}
+
 #prediction .top-left{
   grid-column: 1;
-  grid-row: 1;
+  grid-row: 2;
   border-right: 3px solid #FFD1FF;
   display: flex;
   justify-content: space-around;
@@ -131,7 +160,7 @@ button{
 
 #prediction .top-right{
   grid-column: 2/3;
-  grid-row: 1/2;
+  grid-row: 2;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -139,7 +168,7 @@ button{
 
 #prediction .bottom{
   grid-column: 1/3;
-  grid-row: 2/3;
+  grid-row: 3;
   border-top: 3px solid #FFD1FF;
 }
 

@@ -32,7 +32,6 @@ export function Histogram({rawData}){
         let newData = [];
         let newEntry = {};
         for(let i = 0; i < rawData.length; ++i){
-          console.log(`entry number ${i} is ${rawData[i]}`)
             newEntry = {
                 genre: rawData[i],
                 time: i*1.5
@@ -43,7 +42,6 @@ export function Histogram({rawData}){
     }, [rawData, genres])
 
     function yFormatter(value){
-        console.log(value);
         return(`${genres[value]}`);
     }
 

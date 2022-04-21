@@ -2,12 +2,134 @@ import {useState} from "react";
 import '../App.css';
 import { Histogram } from "./Histogram";
 import { GenreRadarChart } from "./GenreRadarChart";
-   
+import { Modal } from "./Modal";
+
+
+function ImprovementModalBody(props){
+
+    const [isGoodGuess, setIsGoodGuess] = useState(null);
+    const [realGenre, setRealGenre] = useState(null);
+    const [disabled, setDisabled] = useState(true);
+    const [genreProposition, setGenreProposition] = useState("");
+
+    const genres = ["Blues", "Classical", "Country", "Disco", "Hiphop", "Jazz", "Metal", "Pop", "Reggae", "Rock"];
+
+
+    function onValueChange(e){
+        // console.log(e.target.value);
+        setRealGenre(null);
+        setGenreProposition(null);
+        if(e.target.value === "Yes"){
+            setIsGoodGuess(true);
+            setDisabled(false);
+        } else {
+            setIsGoodGuess(false);
+            setDisabled(true);
+        }
+    }
+
+    function handleSubmit(e){
+        e.preventDefault();
+        if(isGoodGuess){
+            console.log(
+                {
+                    "guessed": props.guess,
+                    "true": props.guess
+                }
+            )
+            return
+        }
+        if(realGenre && realGenre !== "Other"){
+            console.log(
+                {
+                    "guessed": props.guess,
+                    "true": realGenre.toLowerCase()
+                }
+            )
+        }
+        if(realGenre === "Other"){
+            console.log(
+                {
+                    "guessed": props.guess,
+                    "true": genreProposition.toLowerCase()
+                }
+            )
+        }
+    }
+
+    function onGenreValueChange(e){
+        // console.log(e.target.value);
+        setRealGenre(e.target.value);
+        setGenreProposition("");
+        if(e.target.value !== "Other"){
+            setDisabled(false);
+        } else {
+            setDisabled(true);
+        }
+    }
+
+    function handlePropositionChange(e){
+        setGenreProposition(e.target.value);
+        if(e.target.value !== ""){
+            setDisabled(false);
+        } else {
+            setDisabled(true);
+        }
+    }
+    
+
+    return(
+        <form>
+            
+            <div onChange={onValueChange}>
+                <p>Is {props.guess} a good guess ?</p>
+                <input type="radio" id="Yes" name="guess-quality" value="Yes"/>
+                <label htmlFor="Yes">Yes</label>
+
+                <input type="radio" name="guess-quality" value="No" id="No"/>
+                <label htmlFor="No">No</label>
+            </div>
+            {isGoodGuess === false && (
+                <div onChange={onGenreValueChange}>
+                    <p>What is the real genre ?</p>
+                    {genres.map(function(genre, index){
+                        return (
+                        <div key={`real-genre-${genre}`}>
+                            <input type="radio" name="real-genre" value={genre} id={genre}/>
+                            <label htmlFor={genre}>{genre}</label>
+                        </div>
+                        )
+                    })}
+                    <div>
+                            <input type="radio" name="real-genre" value="Other" id="other"/>
+                            <label htmlFor="other">Other</label>
+                    </div>
+                </div>
+            )}
+            {isGoodGuess === false && realGenre === "Other" && (
+                <div>
+                    <p>What is your proposition ?</p>
+                    <label htmlFor="proposition">Other</label>
+                    <input type="text" name="proposition" value={genreProposition} onChange={handlePropositionChange}/>
+                    
+                </div>
+                
+            )}
+            <button disabled={disabled} onClick={handleSubmit}>Submit</button>
+        </form>
+    )
+}
+
 
 export function Predict(){
     const [youtubeURL, setYoutubeURL] = useState("");
-    const [data, setData] = useState({"guess":[{"name":"hiphop","count":68},{"name":"pop","count":45},{"name":"classical","count":10},{"name":"country","count":4},{"name":"disco","count":4},{"name":"jazz","count":2},{"name":"rock","count":2},{"name":"reggae","count":1}],"higherGuess":"hiphop","higherCount":68,"total":136,"message":"success","rawData":[1,1,1,1,1,1,1,1,1,4,4,7,3,7,4,7,4,7,7,7,4,7,7,7,7,7,7,4,4,4,4,4,4,4,7,4,4,7,4,7,7,7,7,7,7,7,7,4,7,4,4,4,4,7,4,7,7,4,7,7,4,7,4,7,5,2,5,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,8,7,2,7,3,7,7,3,9,7,7,7,7,7,7,7,7,7,7,4,7,2,4,4,4,3,4,4,4,4,9,4,4,4,1]});
+    const [data, setData] = useState({"guess":[{"name":"hiphop","count":134},{"name":"pop","count":44},{"name":"classical","count":31},{"name":"jazz","count":17},{"name":"reggae","count":8},{"name":"country","count":3},{"name":"disco","count":2},{"name":"metal","count":2},{"name":"blues","count":1}],"higherGuess":"hiphop","higherCount":134,"total":242,"message":"success","rawData":[5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,8,4,4,8,7,4,4,7,7,7,4,7,4,8,4,8,4,4,4,4,4,4,7,8,7,4,4,4,7,4,4,4,4,4,4,4,4,4,4,7,4,7,7,7,8,2,8,7,4,4,4,4,4,4,4,7,7,4,7,4,7,7,4,7,4,4,4,4,2,4,7,7,4,4,4,4,7,4,4,4,4,4,4,7,4,4,4,4,4,4,7,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,7,7,4,4,7,4,5,5,5,5,5,7,5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,1,1,4,6,4,4,6,4,4,2,4,4,0,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,7,8,4,7,7,7,7,7,7,7,7,7,4,7,7,4,7,7,7,7,1,4,5,5,1,1,1,1]})
     const [loading, setLoading] = useState(false);
+    const [isModalShowing, setShowModal] = useState(false);
+
+    function toggleShowModal(){
+        setShowModal(prev => !prev);
+    }
 
     function handleValueChange(e){
         setYoutubeURL(e.target.value);
@@ -47,7 +169,20 @@ export function Predict(){
                 )}
                 {data && data.message==="success" &&(
                 <div id="prediction">
-                
+                    
+                        <div className="top">
+                            <span>
+                                is <strong>{data.higherGuess}</strong> a good guess ?
+                            </span> 
+                            <button onClick={toggleShowModal}>Help us improve</button>
+                            <Modal 
+                                isShowing={isModalShowing} 
+                                toggleShow={toggleShowModal}
+                                modalTitle="Help us improve"
+                            >
+                                <ImprovementModalBody guess={data.higherGuess}/>
+                            </Modal>
+                        </div>
                         <div className="top-left">
                             <ul>
                             {data.guess.map(function(genre, index){
@@ -70,6 +205,7 @@ export function Predict(){
                             
                         </div>
                         <div className="top-right">
+                             {/*Comes from radar Error: <path> attribute d: Expected number, "M NaN,NaNL NaN,NaN…". */}
                             <GenreRadarChart data={data}/>
                         </div>
                         <div className="bottom">

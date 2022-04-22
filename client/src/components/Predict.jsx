@@ -55,6 +55,7 @@ function ImprovementModalBody(props){
                 }
             )
         }
+        props.toggleShow();
     }
 
     function onGenreValueChange(e){
@@ -81,16 +82,16 @@ function ImprovementModalBody(props){
     return(
         <form>
             
-            <div onChange={onValueChange}>
+            <section onChange={onValueChange}>
                 <p>Is {props.guess} a good guess ?</p>
                 <input type="radio" id="Yes" name="guess-quality" value="Yes"/>
                 <label htmlFor="Yes">Yes</label>
 
                 <input type="radio" name="guess-quality" value="No" id="No"/>
                 <label htmlFor="No">No</label>
-            </div>
+            </section>
             {isGoodGuess === false && (
-                <div onChange={onGenreValueChange}>
+                <section onChange={onGenreValueChange}>
                     <p>What is the real genre ?</p>
                     {genres.map(function(genre, index){
                         return (
@@ -101,21 +102,24 @@ function ImprovementModalBody(props){
                         )
                     })}
                     <div>
+                            <br/>
                             <input type="radio" name="real-genre" value="Other" id="other"/>
                             <label htmlFor="other">Other</label>
                     </div>
-                </div>
+                </section>
             )}
             {isGoodGuess === false && realGenre === "Other" && (
-                <div>
+                <section>
                     <p>What is your proposition ?</p>
-                    <label htmlFor="proposition">Other</label>
                     <input type="text" name="proposition" value={genreProposition} onChange={handlePropositionChange}/>
                     
-                </div>
+                </section>
                 
             )}
-            <button disabled={disabled} onClick={handleSubmit}>Submit</button>
+            <footer>
+                <button disabled={disabled} onClick={handleSubmit}>Submit</button>
+            </footer>
+            
         </form>
     )
 }
@@ -180,7 +184,7 @@ export function Predict(){
                                 toggleShow={toggleShowModal}
                                 modalTitle="Help us improve"
                             >
-                                <ImprovementModalBody guess={data.higherGuess}/>
+                                <ImprovementModalBody guess={data.higherGuess} toggleShow={toggleShowModal}/>
                             </Modal>
                         </div>
                         <div className="top-left">

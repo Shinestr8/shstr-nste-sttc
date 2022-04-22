@@ -18,7 +18,24 @@ export function Page(){
             <article id="main-content">
                 <Outlet/>
             </article>
-      </div>        
+            
+        </div>
+    //     <div id="page">
+    //         <header id="main-header">
+    //             <img
+    //                 src={process.env.PUBLIC_URL + '/images/logo.png'}
+    //                 alt="logo"
+    //                 id="logo"
+    //             />
+    //             <div className="navlink" >
+    //                 <NavLink to="/">Predict</NavLink>
+    //                 <NavLink to="/about">About</NavLink>
+    //             </div>
+    //         </header>
+    //         <article id="main-content">
+    //             <Outlet/>
+    //         </article>
+    //   </div>        
     )
 }
 

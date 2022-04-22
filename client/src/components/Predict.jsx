@@ -1,8 +1,9 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import '../App.css';
 import { Histogram } from "./Histogram";
 import { GenreRadarChart } from "./GenreRadarChart";
 import { Modal } from "./Modal";
+import { Toaster } from "./Toaster";
 
 
 function ImprovementModalBody(props){
@@ -37,9 +38,9 @@ function ImprovementModalBody(props){
                     "true": props.guess
                 }
             )
-            return
+            
         }
-        if(realGenre && realGenre !== "Other"){
+        if(!isGoodGuess && realGenre && realGenre !== "Other"){
             console.log(
                 {
                     "guessed": props.guess,
@@ -47,7 +48,7 @@ function ImprovementModalBody(props){
                 }
             )
         }
-        if(realGenre === "Other"){
+        if(!isGoodGuess && realGenre && realGenre === "Other"){
             console.log(
                 {
                     "guessed": props.guess,
@@ -56,6 +57,7 @@ function ImprovementModalBody(props){
             )
         }
         props.toggleShow();
+        props.showAlert();
     }
 
     function onGenreValueChange(e){
@@ -130,6 +132,20 @@ export function Predict(){
     const [data, setData] = useState({"guess":[{"name":"hiphop","count":134},{"name":"pop","count":44},{"name":"classical","count":31},{"name":"jazz","count":17},{"name":"reggae","count":8},{"name":"country","count":3},{"name":"disco","count":2},{"name":"metal","count":2},{"name":"blues","count":1}],"higherGuess":"hiphop","higherCount":134,"total":242,"message":"success","rawData":[5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,8,4,4,8,7,4,4,7,7,7,4,7,4,8,4,8,4,4,4,4,4,4,7,8,7,4,4,4,7,4,4,4,4,4,4,4,4,4,4,7,4,7,7,7,8,2,8,7,4,4,4,4,4,4,4,7,7,4,7,4,7,7,4,7,4,4,4,4,2,4,7,7,4,4,4,4,7,4,4,4,4,4,4,7,4,4,4,4,4,4,7,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,7,7,4,4,7,4,5,5,5,5,5,7,5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,1,1,4,6,4,4,6,4,4,2,4,4,0,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,7,8,4,7,7,7,7,7,7,7,7,7,4,7,7,4,7,7,7,7,1,4,5,5,1,1,1,1]})
     const [loading, setLoading] = useState(false);
     const [isModalShowing, setShowModal] = useState(false);
+    const [showToaster, setShowToaster] = useState(false);
+
+
+    useEffect(function(){
+        let timer;
+        if(showToaster){
+            timer = setTimeout(function(){
+                setShowToaster(false);
+            }, 5000);
+        }
+        return(function(){
+            window.clearTimeout(timer)
+        })
+    }, [showToaster])
 
     function toggleShowModal(){
         setShowModal(prev => !prev);
@@ -184,8 +200,13 @@ export function Predict(){
                                 toggleShow={toggleShowModal}
                                 modalTitle="Help us improve"
                             >
-                                <ImprovementModalBody guess={data.higherGuess} toggleShow={toggleShowModal}/>
+                                <ImprovementModalBody showAlert={()=>setShowToaster(true)} guess={data.higherGuess} toggleShow={toggleShowModal}/>
                             </Modal>
+                            <Toaster 
+                                isShowing={showToaster}
+                                message="Thanks for your feedbacks ❤️"
+                                style={{backgroundColor:"#C3F3D7", border:"1px solid #2FD573"}}
+                            />
                         </div>
                         <div className="top-left">
                             <ul>

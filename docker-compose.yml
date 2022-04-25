@@ -11,15 +11,18 @@ services:
     working_dir: /app
     volumes:
       - ./server:/app
+      
+  database:
+    container_name: onobot_mongo_db
+    image: mongo:5.0.7
+    volumes:
+      - ono_mongo_volume:/data/db
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "${ONO_MONGO_ROOT}"
+      MONGO_INITDB_ROOT_PASSWORD: "${ONO_MONGO_PASSWORD}"
 
-  # ai:
-  #   image: python:3.6
-  #   container_name: onobot
-  #   build:
-  #     context: ./test
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - 8000:8000
-  #   working_dir: /app
-  #   volumes:
-  #     - ./test:/app
+
+volumes:
+  ono_mongo_volume:

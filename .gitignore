@@ -8,3 +8,5 @@
 IA/
 npm-debug.log
 /tmp
+test.py
+.env

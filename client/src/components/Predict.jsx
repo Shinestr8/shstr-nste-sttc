@@ -29,33 +29,41 @@ function ImprovementModalBody(props){
         }
     }
 
+    async function sendData(data){
+        
+        const response = await fetch('/yes', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        const content = await response.json();
+        console.log(content);
+    }
+
+
     function handleSubmit(e){
         e.preventDefault();
-        if(isGoodGuess){
-            console.log(
-                {
-                    "guessed": props.guess,
-                    "true": props.guess
-                }
-            )
-            
+        let result = {
+            "guessed": props.guess,
+            "true": props.guess
         }
+        
         if(!isGoodGuess && realGenre && realGenre !== "Other"){
-            console.log(
-                {
+            result = {
                     "guessed": props.guess,
                     "true": realGenre.toLowerCase()
                 }
-            )
         }
         if(!isGoodGuess && realGenre && realGenre === "Other"){
-            console.log(
-                {
-                    "guessed": props.guess,
-                    "true": genreProposition.toLowerCase()
-                }
-            )
+            result = {
+                "guessed": props.guess,
+                "true": genreProposition.toLowerCase()
+            }
         }
+        sendData(result);
         props.toggleShow();
         props.showAlert();
     }
@@ -175,7 +183,7 @@ export function Predict(){
 
     return(
     <div id="predict">
-        
+
             <form>
                 <input placeholder="youtube link" type="text" value={youtubeURL} onChange={handleValueChange}/>
                 <button type="submit" onClick={submitLink}>Submit</button>
@@ -189,7 +197,6 @@ export function Predict(){
                 )}
                 {data && data.message==="success" &&(
                 <div id="prediction">
-                    
                         <div className="top">
                             <span>
                                 is <strong>{data.higherGuess}</strong> a good guess ?

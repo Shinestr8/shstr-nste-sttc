@@ -16,6 +16,11 @@ function isValidLink(url){
     return false
 }   
 
+app.post('/yes', function(req, res){
+    console.log(req.body);
+    res.json("oui")
+})
+
 app.get('/predict', (req, res) => {
     const url = req.query.url;
     if(!isValidLink(url)){

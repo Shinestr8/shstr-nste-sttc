@@ -61,7 +61,7 @@ a:visited{
   height: 2.5rem;
 }
 
-input[type="text"]{
+#yt-link-input{
   height: 100%;
   width: 80%;
   box-sizing: border-box;
@@ -70,7 +70,7 @@ input[type="text"]{
   border-top-left-radius: 15px;
 }
 
-form button{
+#process-link-btn{
   box-sizing: border-box;
   height: 100%;
   width: 20%;

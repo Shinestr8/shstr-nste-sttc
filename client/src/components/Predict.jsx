@@ -185,8 +185,20 @@ export function Predict(){
     <div id="predict">
 
             <form>
-                <input placeholder="youtube link" type="text" value={youtubeURL} onChange={handleValueChange}/>
-                <button type="submit" onClick={submitLink}>Submit</button>
+                <input 
+                    id="yt-link-input"
+                    placeholder="youtube link" 
+                    type="text" 
+                    value={youtubeURL} 
+                    onChange={handleValueChange}
+                />
+                <button 
+                    id="process-link-btn"
+                    type="submit" 
+                    onClick={submitLink}
+                >
+                    Submit
+                </button>
             </form>
             {loading && (
                     <div>Processing your song...</div>

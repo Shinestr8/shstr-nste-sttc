@@ -52,7 +52,9 @@ export function Histogram({rawData}){
     return(
         <div id="histogram">
         {data && (
-            <ResponsiveContainer width="99%" height={500}>
+          <div style={{display: "flex", justifyContent: "center"}}>
+
+            <ResponsiveContainer width="99%" height={400}>
             <LineChart
               data={data}
               margin={{
@@ -78,7 +80,7 @@ export function Histogram({rawData}){
             </LineChart>
           </ResponsiveContainer>    
             
-     
+              </div>
         )}
         </div>
     )

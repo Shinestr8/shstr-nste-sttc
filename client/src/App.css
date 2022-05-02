@@ -2,6 +2,7 @@
 
 html, body, #root{
   height: 100%;
+  width: 100%;
 }
 
 #logo{
@@ -9,13 +10,12 @@ html, body, #root{
   height: 100%;
   padding: 0.2rem;
   padding-left: 1rem;
-  
 }
 
 #page{
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 100%;
   grid-template-rows: 10% 1fr;
 }
 
@@ -35,6 +35,7 @@ html, body, #root{
   background-color: #1C3041;
   /* color: #000; */
   color: #ffffff;
+  /* height: 10%; */
   display: flex;
   justify-content: space-between;
   /* background: linear-gradient(to bottom right, #FAF, #dc2430); */
@@ -169,7 +170,12 @@ form button:disabled{
   grid-column: 1/3;
   grid-row: 3;
   border-top: 3px solid #FFD1FF;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
 }
+
+
 
 .recharts-line .recharts-curve {
   stroke: none;
@@ -179,6 +185,10 @@ form button:disabled{
   background-color: #ffffff;
   border: 1px solid #faf;
   width: 8rem;
+}
+
+.recharts-wrapper{
+  position: absolute; 
 }
 
 .genre-icon{
@@ -195,8 +205,6 @@ ul{
 }
 
 @media screen and (max-width: 1200px){
-
-
 
   #prediction .top-left{
     grid-column: 1/3;

@@ -242,6 +242,12 @@ ul{
   margin-left: 1rem;
 }
 
+.about-text{
+  display: flex;
+  justify-content: flex-start;
+  text-align: justify;
+}
+
 @keyframes rotation {
   from {
     transform: rotate(0deg);

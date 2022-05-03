@@ -198,6 +198,33 @@ ul{
   list-style-type: none;
 }
 
+.loading-container{
+  /* background-color: blue; */
+  /* width: 80%; */
+  /* height: 25%; */
+  /* margin: auto; */
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spin-icon{
+  width: 3rem;
+  height: 3rem;
+  animation: rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+
 @media screen and (max-width: 1200px){
 
   #yt-link-input{

@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useMemo} from "react";
 import '../App.css';
 import { Histogram } from "./Histogram";
 import { GenreRadarChart } from "./GenreRadarChart";
@@ -144,6 +144,7 @@ export function Predict(){
     const [loading, setLoading] = useState(false);
     const [isModalShowing, setShowModal] = useState(false);
     const [showToaster, setShowToaster] = useState(false);
+    // const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
 
     useEffect(function(){
@@ -157,6 +158,7 @@ export function Predict(){
             window.clearTimeout(timer)
         })
     }, [showToaster])
+
 
     function toggleShowModal(){
         setShowModal(prev => !prev);
@@ -183,13 +185,21 @@ export function Predict(){
         catch(e){
             setData({message: "An error occured, please try again later"})
             setLoading(false);  
-        }
-        
+        }    
     }
+
 
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
+
+    const isButtonDisabled = useMemo(()=>{
+        if(!youtubeURL.includes("watch?v=")){
+            return true;
+        } else {
+            return false;
+        }
+    }, [youtubeURL])
 
     return(
     <div id="predict">
@@ -206,6 +216,7 @@ export function Predict(){
                     id="process-link-btn"
                     type="submit" 
                     onClick={submitLink}
+                    disabled={isButtonDisabled}
                 >
                     Submit
                 </button>

@@ -37,7 +37,7 @@ html, body, #root{
   justify-content: space-between;
 }
 
-a:visited{
+#main-header a:visited{
   color: #ffffff;
 }
 
@@ -246,7 +246,38 @@ ul{
   display: flex;
   justify-content: flex-start;
   text-align: justify;
+  padding: 3rem;
 }
+
+.about-text h3{
+  font-size: 150%;
+  /* text-decoration: underline; */
+  color: #1C3041;
+}
+
+.about-text section{
+  border-top: 2px solid #1C3041;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.about-text p{
+  line-height: 2rem;
+}
+
+.melspectrogram-figure{
+  display: block;
+  margin: auto;
+  max-width: 100% ;
+  box-shadow: 2px 2px 2px 1px grey ;
+}
+
+#report-genre-list{
+  font-weight: bold;
+}
+
 
 @keyframes rotation {
   from {
@@ -259,6 +290,11 @@ ul{
 
 
 @media screen and (max-width: 1200px){
+
+
+  .about-text{
+    padding: 1rem;
+  }
 
   #yt-link-input{
     border-radius: 0;

@@ -34,13 +34,14 @@ export function About(){
                     </p>
                     <p>
                         The technologies used by ONOBOT are
+                    </p>
                         <ul>
                             <li><strong>Python</strong></li>
                             <li><strong>Tensorflow</strong> with <strong>Keras</strong>, to create the deep-learning neural network</li>
                             <li><strong>Librosa</strong> for audio processing</li>
                             <li><strong>GTZAN</strong> dataset</li>
                         </ul>
-                    </p>
+                    
                         
                 </section>
 
@@ -48,6 +49,7 @@ export function About(){
                     <h3>GTZAN Dataset</h3>
                     <p>The most important part of most AI projects is the dataset. In the case of ONOBOT, the dataset is the <a href="https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genre-classification">GTZAN dataset</a>
                     , which is the most used for the task of music genre recognition. It is composed of a <strong>thousand 30 seconds tracks</strong>, distributed evenly between 10 music genres:
+                    </p>
                     <ul id="report-genre-list">
                         <li>Blues</li>
                         <li>Classical</li>
@@ -60,8 +62,11 @@ export function About(){
                         <li>Reggae</li>
                         <li>Metal</li>
                     </ul>
+                    <p>
                     70% of the dataset was kept for training data and 30% for validation data. After pre-processing, that makes a total of 14000 melspectrograms for training and 6000 for validation.
+                    
                     </p>
+                    
                 </section>
                 
 
@@ -73,11 +78,12 @@ export function About(){
                         On an individual 1.5sec segment, the accuracy is <strong>74%</strong>
                         <br/>
                         If we put the song back together and look at the most predicted genre, the accuracy reaches <strong>86%</strong>
+                        </p>
                         <div style={{display: 'flex', justifyContent: 'center', margin: '1rem'}}>
                             <ConfusionMatrix/>
                         </div>
                     
-                    </p>
+                    
                     
                 </section>
 

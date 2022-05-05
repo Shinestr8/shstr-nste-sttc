@@ -21,17 +21,21 @@ form footer{
     border-top: 1px solid #cccccc;
 }
 
-form footer button{
-    box-sizing: border-box;
-    height: 2rem;
-    width: 20%;
-    border: none;
-    cursor: pointer;
-    background-color: #61A0AF;
-    color: #ffffff;
-    font-weight: bold;
-    border-radius: 15px;
-    margin-right: 1rem;
+#modal-submit-btn{
+  box-sizing: border-box;
+  height: 2rem;
+  width: 20%;
+  border: none;
+  cursor: pointer;
+  background-color: #61A0AF;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 15px;
+  margin-right: 1rem;
+}
+
+#modal-submit-btn:hover{
+  background-color: #6ea8b6;
 }
 
 form section{
@@ -85,4 +89,8 @@ form section{
     cursor: pointer;
     border: none;
     background: transparent;
+  }
+
+  .modal-close-button:hover{
+    color:#777777
   }

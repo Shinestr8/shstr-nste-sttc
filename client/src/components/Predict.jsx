@@ -128,7 +128,7 @@ function ImprovementModalBody(props){
                 
             )}
             <footer>
-                <button disabled={disabled} onClick={handleSubmit}>Submit</button>
+                <button id="modal-submit-btn" disabled={disabled} onClick={handleSubmit}>Submit</button>
             </footer>
             
         </form>

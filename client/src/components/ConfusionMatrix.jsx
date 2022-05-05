@@ -1,8 +1,25 @@
 import { HeatMapGrid } from 'react-grid-heatmap';
-
+import useWindowDimensions from './tool/windowDimensions';
+import { useEffect, useState } from 'react';
 
 //TODO: Make this responsive
 export function ConfusionMatrix(){
+
+
+  const {width} = useWindowDimensions();
+  const [cellHeight, setCellHeight] = useState('4rem');
+
+  useEffect(()=>{
+    if(width < 800){
+      setCellHeight('1.5rem')
+    }
+    if(width > 800 && width < 1024){
+      setCellHeight('2.5rem')
+    }
+    if(width > 1024){
+      setCellHeight('4rem')
+    }
+  }, [width])
 
   const xLabels = ['Blues', 'Classical', 'Country', 'Disco', 'HipHop', 'Jazz', 'Metal', 'Pop', 'Reggae', 'Rock'];
   const yLabels = ['Blues', 'Classical', 'Country', 'Disco', 'HipHop', 'Jazz', 'Metal', 'Pop', 'Reggae', 'Rock'];
@@ -28,30 +45,43 @@ export function ConfusionMatrix(){
   return(
     <div>
         <h4 style={{textAlign: 'center'}}>Confusion matrix (1.5sec segments)</h4>
-        <div style={{textAlign: 'center'}}>Predicted labels</div>
+        <div id="cm-x-axis-label" style={{textAlign: 'center'}}>
+          Predicted labels
+        </div>
         <div style={{display: 'flex'}}>
-            <div style={{flex: "0", writingMode: 'vertical-rl', alignSelf: 'center', marginRight: 'auto'}}>True labels</div>
-            <div style={{marginLeft: 'auto'}}>
+            <div 
+              id="cm-y-axis-label"
+              style={{
+                flex: "0", 
+                writingMode: 'vertical-rl', 
+                alignSelf: 'center', 
+                marginRight: 'auto'
+              }}
+            >
+              True labels
+            </div>
+            <div>
             <HeatMapGrid
-                data={data}
-                xLabels={xLabels}
-                yLabels={yLabels}
-                cellHeight="4rem"
-                cellRender={cellRender}
-                xLabelsStyle={() => ({
-                    // color: index % 2 ? 'transparent' : '#777',
-                    fontSize: '.8rem'
-                    })}
-                yLabelsStyle={()=>({fontSize: '.8rem'})}
-                cellStyle={(_x, _y, ratio) => ({
-                    background: `rgb(248, 0, 248, ${ratio})`,
-                    fontSize: '.8rem',
-                    color: `rgb(0, 0, 0)`
-                })}
+                  data={data}
+                  xLabels={xLabels}
+                  yLabels={yLabels}
+                  cellHeight={cellHeight}
+                  cellRender={cellRender}
+                  xLabelsStyle={() => ({
+                      // color: index % 2 ? 'transparent' : '#777',
+                      fontSize: '.8rem',
+                      color: width > 1024 ? '#000000' : 'transparent'
+                      })}
+                  yLabelsStyle={()=>({fontSize: '.8rem'})}
+                  cellStyle={(_x, _y, ratio) => ({
+                      background: `rgb(248, 0, 248, ${ratio})`,
+                      fontSize: '.8rem',
+                      color: `rgb(0, 0, 0)`
+                  })}
 
 
-                square={true}
-            />
+                  square={true}
+              />
             </div>
             
         </div>

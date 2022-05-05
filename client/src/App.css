@@ -30,6 +30,10 @@ html, body, #root{
   margin-right: 1rem;
 }
 
+.navlink a:hover{
+  font-size: 105%;
+}
+
 #main-header{
   background-color: #1C3041;
   color: #ffffff;
@@ -86,6 +90,10 @@ html, body, #root{
   font-weight: bold;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
+}
+
+#process-link-btn:hover{
+  background-color: #6ea8b6
 }
 
 #process-link-btn:disabled{

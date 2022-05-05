@@ -5,6 +5,7 @@ export function About(){
         <div className="about-text">
             <div>
                 <h1>About ONOBOT</h1>
+
                 <section>
                     <h3>Why was ONOBOT created ?</h3>
                     <p>
@@ -79,12 +80,14 @@ export function About(){
                         <br/>
                         If we put the song back together and look at the most predicted genre, the accuracy reaches <strong>86%</strong>
                         </p>
-                        <div style={{display: 'flex', justifyContent: 'center', margin: '1rem'}}>
+                        <div id="confusion-matrix"> 
                             <ConfusionMatrix/>
                         </div>
-                    
-                    
-                    
+                </section>
+
+                <section>
+                    <h3>Why the name "ONOBOT" ?</h3>
+                    <p>Good question.</p>
                 </section>
 
             </div>

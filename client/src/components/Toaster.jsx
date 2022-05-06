@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-// import { filterProps } from "recharts/types/util/types";
+import { PropTypes } from "prop-types";
 
 
 import './Toaster.css'
@@ -13,7 +13,6 @@ export function Toaster(props){
         return(ReactDOM.createPortal(
             <>
             <div  id="toaster">
-                {/* <div id="test-toast">Thanks blabla</div> */}
                 <div id="toast" style={props.style}>
                     {props.message}
                 </div>
@@ -21,4 +20,10 @@ export function Toaster(props){
             </>
         ,document.body))
     }
+}
+
+Toaster.propTypes = {
+    message: PropTypes.string,
+    isShowing: PropTypes.bool,
+    style: PropTypes.object
 }

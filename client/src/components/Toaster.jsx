@@ -23,7 +23,12 @@ export function Toaster(props){
 }
 
 Toaster.propTypes = {
-    message: PropTypes.string,
-    isShowing: PropTypes.bool,
+    message: PropTypes.string.isRequired,
+    isShowing: PropTypes.bool.isRequired,
     style: PropTypes.object
+}
+
+Toaster.defaultProps = {
+    message: 'Default message',
+    isShowing: false
 }

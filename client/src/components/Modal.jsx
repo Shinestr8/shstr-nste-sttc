@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
+import { PropTypes } from "prop-types";
 
 import "./modal.css"
 
@@ -45,4 +46,11 @@ export function Modal(props){
         )
     } 
     return null;
+}
+
+Modal.propTypes = {
+  toggleShow: PropTypes.func,
+  isShowing: PropTypes.bool,
+  modalTitle: PropTypes.string,
+  children: PropTypes.element
 }

@@ -132,7 +132,7 @@ export function Predict(){
                             </Modal>
                             <Toaster 
                                 isShowing={showToaster}
-                                message="Thanks for your feedbacks ❤️"
+                                // message="Thanks for your feedbacks ❤️"
                                 style={{backgroundColor:"#C3F3D7", border:"1px solid #2FD573"}}
                             />
                         </div>

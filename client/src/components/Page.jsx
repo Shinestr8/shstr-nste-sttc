@@ -1,6 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom"
-// import { Predict } from "./Predict"
-import { useNavigate } from "react-router-dom"
+import { NavLink, Outlet, useNavigate } from "react-router-dom"
 
 export function Page(){
 

@@ -2,7 +2,8 @@ import { HeatMapGrid } from 'react-grid-heatmap';
 import useWindowDimensions from './tool/windowDimensions';
 import { useEffect, useState } from 'react';
 
-//TODO: Make this responsive
+
+
 export function ConfusionMatrix(){
 
 

@@ -1,5 +1,5 @@
 import {useState, useEffect, useMemo} from "react";
-import '../App.css';
+
 import { Histogram } from "./Histogram";
 import { GenreRadarChart } from "./GenreRadarChart";
 import { Modal } from "./Modal";
@@ -7,17 +7,16 @@ import { Toaster } from "./Toaster";
 import { LoadingIcon } from "./Icons/LoadingIcon";
 import { ImprovementModalBody } from "./ImprovementModalBody";
 
+import '../App.css';
 
 
 export function Predict(){
+
     const [youtubeURL, setYoutubeURL] = useState("");
-    // const [data, setData] = useState(null);
-    // const [loading, setLoading] = useState(true);
     const [data, setData] = useState({"guess":[{"name":"hiphop","count":134},{"name":"pop","count":44},{"name":"classical","count":31},{"name":"jazz","count":17},{"name":"reggae","count":8},{"name":"country","count":3},{"name":"disco","count":2},{"name":"metal","count":2},{"name":"blues","count":1}],"higherGuess":"hiphop","higherCount":134,"total":242,"message":"success","rawData":[5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,8,4,4,8,7,4,4,7,7,7,4,7,4,8,4,8,4,4,4,4,4,4,7,8,7,4,4,4,7,4,4,4,4,4,4,4,4,4,4,7,4,7,7,7,8,2,8,7,4,4,4,4,4,4,4,7,7,4,7,4,7,7,4,7,4,4,4,4,2,4,7,7,4,4,4,4,7,4,4,4,4,4,4,7,4,4,4,4,4,4,7,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,7,7,4,4,7,4,5,5,5,5,5,7,5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,1,1,4,6,4,4,6,4,4,2,4,4,0,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,7,8,4,7,7,7,7,7,7,7,7,7,4,7,7,4,7,7,7,7,1,4,5,5,1,1,1,1]})
     const [loading, setLoading] = useState(false);
     const [isModalShowing, setShowModal] = useState(false);
     const [showToaster, setShowToaster] = useState(false);
-    // const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
 
     useEffect(function(){
@@ -125,7 +124,11 @@ export function Predict(){
                                 toggleShow={toggleShowModal}
                                 modalTitle="Help us improve"
                             >
-                                <ImprovementModalBody showAlert={()=>setShowToaster(true)} guess={data.higherGuess} toggleShow={toggleShowModal}/>
+                                <ImprovementModalBody 
+                                    showAlert={()=>setShowToaster(true)} 
+                                    guess={data.higherGuess} 
+                                    toggleShow={toggleShowModal}
+                                />
                             </Modal>
                             <Toaster 
                                 isShowing={showToaster}

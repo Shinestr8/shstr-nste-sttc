@@ -302,11 +302,60 @@ ul{
   color: #1C3041;
 }
 
+#table-container{
+  width: 80%;
+}
+
+#prediction-table{
+  margin-top: 1rem;
+  width: 100%;
+  border: none;
+  border-spacing: 0px;
+  padding: 0;  
+}
+
+#prediction-table thead{
+  background-color: #1C3041;
+  color: #ffffff;
+  border: none;
+  text-align: start;
+}
+
+#prediction-table thead tr th{
+  text-align: start;
+  padding: 0.5rem;
+}
+
+#prediction-table thead tr th:first-child{
+  border-top-left-radius: 15px;
+}
+
+#prediction-table thead tr th:last-child{
+  border-top-right-radius: 15px;
+}
+
+#prediction-table tbody tr td{
+  padding: 0.5rem;
+  width: 33%;
+}
+
+.prediction-fail{
+  background-color: #FF4D4F;
+  color: #ffffff;
+}
+
+.prediction-success{
+  background-color: #2FD573;
+  color: #ffffff;
+}
 
 
 @media screen and (max-width: 1200px){
 
-
+  #table-container{
+    width:100%;
+  }
+  
   .about-text{
     padding: 0.5rem;
   }

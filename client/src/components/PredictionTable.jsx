@@ -35,7 +35,7 @@ export function PredictionTable(){
                             <tr className={`prediction-${line.status}`}>
                                 <td>{line.predictedLabel}</td>
                                 <td>{line.trueLabel}</td>
-                                <td><a href={line.youtubeURL}>{line.youtubeURL}</a></td>
+                                <td><a href={line.youtubeURL}>{line.youtubeURL.split('youtube.com/')[1]}</a></td>
                             </tr>
                         )
                     })}

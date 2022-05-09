@@ -327,16 +327,25 @@ ul{
 }
 
 #prediction-table thead tr th:first-child{
-  border-top-left-radius: 15px;
+  border-top-left-radius: 10px;
 }
 
 #prediction-table thead tr th:last-child{
-  border-top-right-radius: 15px;
+  border-top-right-radius: 10px;
 }
 
 #prediction-table tbody tr td{
   padding: 0.5rem;
   width: 33%;
+  word-break: break-all;
+}
+
+#prediction-table tbody tr:last-child td:first-child{
+  border-bottom-left-radius: 10px;
+}
+
+#prediction-table tbody tr:last-child td:last-child{
+  border-bottom-right-radius: 10px;
 }
 
 .prediction-fail{
@@ -351,6 +360,22 @@ ul{
 
 
 @media screen and (max-width: 1200px){
+
+  #prediction-table thead tr th:first-child{
+    border-top-left-radius: 0px;
+  }
+  
+  #prediction-table thead tr th:last-child{
+    border-top-right-radius: 0px;
+  }
+
+  #prediction-table tbody tr:last-child td:first-child{
+    border-bottom-left-radius: 0px;
+  }
+  
+  #prediction-table tbody tr:last-child td:last-child{
+    border-bottom-right-radius: 0px;
+  }
 
   #table-container{
     width:100%;

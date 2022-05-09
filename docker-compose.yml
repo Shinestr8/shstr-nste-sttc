@@ -9,6 +9,9 @@ services:
     ports:
       - 5000:5000
     working_dir: /app
+    environment:
+      PORT: 5000
+      MONGO_URI: mongodb://${ONO_MONGO_ROOT}:${ONO_MONGO_PASSWORD}@onobot_mongo_db:27017/my_db?authSource=admin
     volumes:
       - ./server:/app
       

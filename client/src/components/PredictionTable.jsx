@@ -24,9 +24,9 @@ export function PredictionTable(){
             <table id="prediction-table">
                 <thead>
                     <tr>
-                        <th className="first-col">Predicted label</th>
+                        <th>Predicted label</th>
                         <th>True label</th>
-                        <th className="last-col">Song URL</th>
+                        <th>Song URL</th>
                     </tr>
                 </thead>
                 <tbody>

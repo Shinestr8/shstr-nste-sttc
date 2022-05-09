@@ -1,9 +1,15 @@
 const express = require('express')
 const {spawn} = require('child_process');
+const route = require('./routes/route');
 const app = express()
 const port = 5000
 
-app.use(express.json())
+app.use(express.json());
+app.use('/api/feedback', route);
+
+require('./initDB')();
+
+
 
 function replaceAll(string, search, replace) {
     return string.split(search).join(replace);
@@ -18,7 +24,7 @@ function isValidLink(url){
 
 app.post('/yes', function(req, res){
     console.log(req.body);
-    res.json("oui")
+    res.json("non")
 })
 
 app.get('/predict', (req, res) => {

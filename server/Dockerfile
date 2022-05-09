@@ -1,4 +1,4 @@
-FROM library/node:6.11.2
+FROM library/node:16.15.0
 
 ENV PATH="/root/miniconda3/bin:$PATH"
 ARG PATH="/root/miniconda3/bin:$PATH"

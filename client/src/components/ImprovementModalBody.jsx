@@ -25,7 +25,7 @@ export function ImprovementModalBody(props){
 
     async function sendData(data){
         
-        const response = await fetch('/yes', {
+        const response = await fetch('/api/feedback', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

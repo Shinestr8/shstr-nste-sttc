@@ -32,7 +32,7 @@ export function PredictionTable(){
                 <tbody>
                     {data && data.map(function(line, index){
                         return(
-                            <tr className={`prediction-${line.status}`}>
+                            <tr key={index} className={`prediction-${line.status}`}>
                                 <td>{line.predictedLabel}</td>
                                 <td>{line.trueLabel}</td>
                                 <td><a href={line.youtubeURL}>{line.youtubeURL.split('youtube.com/')[1]}</a></td>

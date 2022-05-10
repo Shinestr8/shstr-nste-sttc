@@ -29,6 +29,7 @@ html, body, #root{
 
 .navlink a{
   margin-right: 1rem;
+  color: #ffffff;
 }
 
 .navlink a:hover{
@@ -260,7 +261,6 @@ ul{
 
 .about-text h3{
   font-size: 150%;
-  /* text-decoration: underline; */
   color: #1C3041;
 }
 

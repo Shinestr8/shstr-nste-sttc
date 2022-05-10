@@ -40,21 +40,29 @@ export function ImprovementModalBody(props){
 
     function handleSubmit(e){
         e.preventDefault();
+        let videoID = props.url.split("&")[0].split("?v=")[1];
+        console.log(videoID);
         let result = {
-            "guessed": props.guess,
-            "true": props.guess
+            "predictedLabel": props.guess,
+            "trueLabel": props.guess,
+            "success": true,
+            "videoID": videoID
         }
         
         if(!isGoodGuess && realGenre && realGenre !== "Other"){
             result = {
-                    "guessed": props.guess,
-                    "true": realGenre.toLowerCase()
+                    "predictedLabel": props.guess,
+                    "trueLabel": realGenre.toLowerCase(),
+                    "success": props.guess.toLowerCase() === realGenre.toLowerCase(),
+                    "videoID": videoID
                 }
         }
         if(!isGoodGuess && realGenre && realGenre === "Other"){
             result = {
-                "guessed": props.guess,
-                "true": genreProposition.toLowerCase()
+                "predictedLabel": props.guess,
+                "trueLabel": genreProposition.toLowerCase(),
+                "success": props.guess.toLowerCase() === realGenre.toLowerCase(),
+                "videoID": videoID
             }
         }
         sendData(result);

@@ -134,6 +134,7 @@ export function Predict(){
                                     showAlert={()=>setShowToaster(true)} 
                                     guess={data.higherGuess} 
                                     toggleShow={toggleShowModal}
+                                    url={youtubeURL}
                                 />
                             </Modal>
                             <Toaster 

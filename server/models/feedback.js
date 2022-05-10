@@ -11,11 +11,11 @@ const feedbackSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    url:{
+    videoID:{
         type:String,
         required: true
     },
-    success:{
+    success:{   
         type: Boolean,
         required: true
     }

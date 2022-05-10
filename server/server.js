@@ -10,14 +10,8 @@ const port = process.env.PORT || 5000
 require('./initDB')();
 
 app.use(express.json());
+
 app.use('/api/feedback', feedbackRoute);
 app.use('/ai', aiRoute)
 
-
-app.post('/yes', function(req, res){
-    console.log(req.body);
-    res.json("non")
-})
-
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`ONOBOT listening on http://localhost:${port}!`))

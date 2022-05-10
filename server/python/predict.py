@@ -34,6 +34,11 @@ def downloadSong(url):
         output = {"message": "song is too long"}
         print(output)
         sys.exit(0)
+    
+    if(int(video_info["duration"]) < 2 ):
+        output = {"message": "song is too short"}
+        print(output)
+        sys.exit(0)
 
     filename = str("tmp/" + video_id + ".m4a")
     options={

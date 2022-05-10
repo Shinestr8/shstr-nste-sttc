@@ -28,13 +28,17 @@ export function PredictionTable(){
                     {data && data.map(function(line, index){
                         return(
                             <tr 
-                                key={index} 
-                                className={line.status ? 'prediction-succcess' : 'prediction-fail'}
+                                key={index}     
+                                className={line.success ? 'prediction-success' : 'prediction-fail'}
                             >
                                 <td>{line.predictedLabel}</td>
                                 <td>{line.trueLabel}</td>
                                 <td>
-                                    <a href={`https://www.youtube.com/watch?v=${line.videoID}`}>
+                                    <a 
+                                        tabIndex="0"
+                                        href={`https://www.youtube.com/watch?v=${line.videoID}`}
+                                        title={`https://www.youtube.com/watch?v=${line.videoID}`}
+                                    >
                                         {line.videoID}
                                     </a>
                                 </td>

@@ -4,12 +4,11 @@ const Feedback = require('../models/feedback')
 
 
 router.get('/',  async (req, res) =>{
-    console.log("GET api/user/")
     try {
-        const users = await Feedback.find();
-        res.status(200).json(users)
+        const feedbacks = await Feedback.find();
+        res.status(200).json(feedbacks)
     } catch (error) {
-        res.status(500).json("Forbidden")
+        res.status(500).json(error)
     }
 })
 

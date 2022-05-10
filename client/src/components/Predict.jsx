@@ -44,7 +44,7 @@ export function Predict(){
     
     async function submitLink(e){
         e.preventDefault();
-        if(!youtubeURL.includes("watch?v=")){
+        if(!(youtubeURL.includes("watch?v=") || youtubeURL.includes("youtu.be"))){
             setData({message: "invalid URL"});
             return
         }
@@ -68,7 +68,7 @@ export function Predict(){
     }
 
     const isButtonDisabled = useMemo(()=>{
-        if(!youtubeURL.includes("watch?v=")){
+        if(!(youtubeURL.includes("watch?v=") || youtubeURL.includes("youtu.be/"))){
             return true;
         } else {
             return false;

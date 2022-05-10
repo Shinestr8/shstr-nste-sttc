@@ -1,23 +1,18 @@
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export function PredictionTable(){
 
-
-    const [data, setData] = useState([
-        {
-            status: 'fail',
-            predictedLabel: 'hiphop',
-            trueLabel: 'pop',
-            youtubeURL: 'https://www.youtube.com/watch?v=9KW7hojmoaI'
-        },
-        {
-            status: 'success',
-            predictedLabel: 'metal',
-            trueLabel: 'metal',
-            youtubeURL: 'https://www.youtube.com/watch?v=9KW7hojmoaI'
+    useEffect(()=>{
+        async function fetchData(){
+          const res = await fetch('/api/feedback/');
+          const data = await res.json();
+          setData(data);
         }
-    ])
+        fetchData()
+      }, [])
+
+    const [data, setData] = useState(null);
 
     return(
         <div id="table-container">
@@ -32,10 +27,17 @@ export function PredictionTable(){
                 <tbody>
                     {data && data.map(function(line, index){
                         return(
-                            <tr key={index} className={`prediction-${line.status}`}>
+                            <tr 
+                                key={index} 
+                                className={line.status ? 'prediction-succcess' : 'prediction-fail'}
+                            >
                                 <td>{line.predictedLabel}</td>
                                 <td>{line.trueLabel}</td>
-                                <td><a href={line.youtubeURL}>{line.youtubeURL.split('youtube.com/')[1]}</a></td>
+                                <td>
+                                    <a href={`https://www.youtube.com/watch?v=${line.videoID}`}>
+                                        {line.videoID}
+                                    </a>
+                                </td>
                             </tr>
                         )
                     })}

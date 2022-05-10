@@ -3,9 +3,14 @@ const router = express.Router();
 const Feedback = require('../models/feedback')
 
 
-router.get('/', function(req, res){
-    console.log("someone wants all feedbacks");
-    res.status(200);
+router.get('/',  async (req, res) =>{
+    console.log("GET api/user/")
+    try {
+        const users = await Feedback.find();
+        res.status(200).json(users)
+    } catch (error) {
+        res.status(500).json("Forbidden")
+    }
 })
 
 router.post('/', function(req, res){

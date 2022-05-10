@@ -37,6 +37,8 @@ export function PredictionTable(){
                                     <a 
                                         tabIndex="0"
                                         href={`https://www.youtube.com/watch?v=${line.videoID}`}
+                                        target='_blank'
+                                        rel="noreferrer"
                                         title={`https://www.youtube.com/watch?v=${line.videoID}`}
                                     >
                                         {line.videoID}

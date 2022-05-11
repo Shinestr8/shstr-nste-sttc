@@ -41,7 +41,7 @@ export function ImprovementModalBody(props){
     function handleSubmit(e){
         e.preventDefault();
         let videoID = "";
-        if(props.url.includes("&")){
+        if(props.url.includes("watch?v=")){
             videoID = props.url.split("&")[0].split("?v=")[1];
         }
         if(props.url.includes("youtu.be/")){

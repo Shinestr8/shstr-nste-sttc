@@ -54,7 +54,7 @@ def downloadSong(url):
         output = {"message": 'Song has no duration argument, this can happen when the link matches a livestream'}
         print(output)
         sys.exit(0)
-        
+
     filename = str("tmp/" + video_id + ".m4a")
     options={
         'format':'m4a',
@@ -153,10 +153,13 @@ def predictInChunk(url):
 def main():
     param = sys.argv[1]
     ytURL = param.split("&")[0]
-    downloadSong(ytURL)
-    predictInChunk(ytURL)  
-    clean(ytURL)
-    
+    try:
+        downloadSong(ytURL)
+        predictInChunk(ytURL)  
+        clean(ytURL)
+    except:
+        output = {"message": "Unexpected error"}
+        print(output)
 
 
 if __name__ == '__main__':

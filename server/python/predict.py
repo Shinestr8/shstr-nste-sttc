@@ -12,14 +12,22 @@ genres.sort()
 
 #function that removes downloaded file after prediction is over
 def clean(url):
-    video_id = url.split("=")[1]
+    video_id = ""
+    if "=" in url:
+        video_id = url.split("=")[1]
+    if "youtu.be/" in url:
+        video_id = url.split("youtu.be/")[1]
     filename = str("tmp/" + video_id + ".m4a")
     os.remove(filename)
 
 
 def downloadSong(url):
-    video_id = url.split("=")[1] #parse URL and keep video ID, will be used as filename
-
+    # video_id = url.split("=")[1] #parse URL and keep video ID, will be used as filename
+    video_id = ""
+    if "=" in url:
+        video_id = url.split("=")[1]
+    if "youtu.be/" in url:
+        video_id = url.split("youtu.be/")[1]
     try:
         video_info = yt_dlp.YoutubeDL().extract_info(
             url = url,download=False
@@ -30,16 +38,23 @@ def downloadSong(url):
         sys.exit(0)
 
     #ignore videos that are longer than 10min
-    if(int(video_info["duration"]) > 600 ):
-        output = {"message": "song is too long"}
+    try:
+            
+        #ignore videos that are longer than 10min
+        if(int(video_info["duration"]) > 600 ):
+            output = {"message": "song is too long"}
+            print(output)
+            sys.exit(0)
+        
+        if(int(video_info["duration"]) < 2 ):
+            output = {"message": "song is too short"}
+            print(output)
+            sys.exit(0)
+    except KeyError:
+        output = {"message": 'Song has no duration argument, this can happen when the link matches a livestream'}
         print(output)
         sys.exit(0)
-    
-    if(int(video_info["duration"]) < 2 ):
-        output = {"message": "song is too short"}
-        print(output)
-        sys.exit(0)
-
+        
     filename = str("tmp/" + video_id + ".m4a")
     options={
         'format':'m4a',
@@ -68,7 +83,12 @@ def processSong(songData):
 #node childprocess didnt have enough RAM to process a song in one go
 #instead, split the song in chunks of 2min and process one after another
 def predictInChunk(url):
-    video_id = url.split("=")[1]
+    video_id = ""
+    if "=" in url:
+        video_id = url.split("=")[1]
+    if "youtu.be/" in url:
+        video_id = url.split("youtu.be/")[1]
+    
     filename = str("tmp/" + video_id + ".m4a")
     signal, sr = librosa.load(filename)
     chunksize_minutes=2 #split file in 2min parts

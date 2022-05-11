@@ -40,7 +40,13 @@ export function ImprovementModalBody(props){
 
     function handleSubmit(e){
         e.preventDefault();
-        let videoID = props.url.split("&")[0].split("?v=")[1];
+        let videoID = "";
+        if(props.url.includes("&")){
+            videoID = props.url.split("&")[0].split("?v=")[1];
+        }
+        if(props.url.includes("youtu.be/")){
+            videoID = props.url.split("youtu.be/")[1]
+        }
         console.log(videoID);
         let result = {
             "predictedLabel": props.guess,

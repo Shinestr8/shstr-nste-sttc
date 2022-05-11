@@ -7,7 +7,7 @@ function replaceAll(string, search, replace) {
 }
 
 function isValidLink(url){
-    if(url.includes("watch?v=")){
+    if(url.includes("watch?v=") || url.includes("youtu.be/")){
         return true
     }
     return false
@@ -28,8 +28,13 @@ router.get('/predict', (req, res) => {
 
     python.on('close', function(code){
         console.log("predict close with code" + code);
-        result = replaceAll(rawString, "'", '"')
-        res.json(JSON.parse(result))
+        try {
+            result = replaceAll(rawString, "'", '"')
+            res.json(JSON.parse(result))    
+        } catch (error) {
+            res.json({"message": error})
+        }
+        
     })
 
    })

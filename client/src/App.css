@@ -303,12 +303,15 @@ ul{
 }
 
 #table-container{
-  width: 80%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  
 }
 
 #prediction-table{
   margin-top: 1rem;
-  width: 100%;
+  width: 80%;
   border: none;
   border-spacing: 0px;
   padding: 0;  

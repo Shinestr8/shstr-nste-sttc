@@ -20,6 +20,7 @@ export function Page(){
                 />
                 <div className="navlink" >
                     <NavLink to="/" tabIndex="0">Predict</NavLink>
+                    <NavLink to="/predictions" tabIndex="0">Result table</NavLink>
                     <NavLink to="/about" tabIndex="0">About</NavLink>
                 </div>
             </header>

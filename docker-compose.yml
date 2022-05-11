@@ -17,6 +17,8 @@ services:
       
   database:
     container_name: onobot_mongo_db
+    logging:
+      driver: none
     image: mongo:5.0.7
     volumes:
       - ono_mongo_volume:/data/db

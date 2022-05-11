@@ -352,12 +352,12 @@ ul{
 }
 
 .prediction-fail{
-  background-color: #FF4D4F;
+  background-color: #FF6768;
   color: #ffffff;
 }
 
 .prediction-success{
-  background-color: #2FD573;
+  background-color: #6EE29E;
   color: #ffffff;
 }
 

@@ -361,6 +361,10 @@ ul{
   color: #ffffff;
 }
 
+#last{
+  border-radius: 15px;
+}
+
 
 @media screen and (max-width: 1200px){
 

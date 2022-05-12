@@ -4,8 +4,10 @@ const Feedback = require('../models/feedback')
 
 
 router.get('/',  async (req, res) =>{
+    console.log(req.query.page)
     try {
-        const feedbacks = await Feedback.find();
+        const feedbacks = await Feedback.find().skip(req.query.page*20).limit(20);
+        // const feedbacks = await Feedback.find();
         res.status(200).json(feedbacks)
     } catch (error) {
         res.status(500).json(error)

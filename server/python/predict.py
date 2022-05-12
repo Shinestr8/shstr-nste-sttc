@@ -41,7 +41,7 @@ def downloadSong(url):
     try:
             
         #ignore videos that are longer than 10min
-        if(int(video_info["duration"]) > 600 ):
+        if(int(video_info["duration"]) > 900 ):
             output = {"message": "song is too long"}
             print(output)
             sys.exit(0)
@@ -84,8 +84,8 @@ def processSong(songData):
 #instead, split the song in chunks of 2min and process one after another
 def predictInChunk(url):
     video_id = ""
-    if "=" in url:
-        video_id = url.split("=")[1]
+    if "watch?v=" in url:
+        video_id = url.split("watch?v=")[1]
     if "youtu.be/" in url:
         video_id = url.split("youtu.be/")[1]
     

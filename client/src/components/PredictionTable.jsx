@@ -81,7 +81,7 @@ export function PredictionTable(){
                                     className={line.success ? 'prediction-success' : 'prediction-fail'}
                                     id={index === data.length-1 ? 'last' : null}
                                 >
-                                    <td>{index +1} {line.predictedLabel}</td>
+                                    <td>{line.predictedLabel}</td>
                                     <td>{line.trueLabel}</td>
                                     <td>
                                         <a 

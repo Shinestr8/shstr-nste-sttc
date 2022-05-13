@@ -20,7 +20,7 @@ router.get('/predict', (req, res) => {
         res.json({"message": "This is not a valid youtube URL"})
         return
     }
-    var result;
+    let result;
     const python = spawn('python', ['./python/predict.py', url]);
     python.stdout.on('data', function(data){
         rawString = data.toString();

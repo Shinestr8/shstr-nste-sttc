@@ -5,7 +5,7 @@ const Feedback = require('../models/feedback')
 
 router.get('/',  async (req, res) =>{
     try {
-        const feedbacks = await Feedback.find().skip(req.query.page*req.query.batchSize).limit(req.query.batchSize);
+        const feedbacks = await Feedback.find().sort({ _id: -1 }).skip(req.query.page*req.query.batchSize).limit(req.query.batchSize);
         res.status(200).json(feedbacks)
     } catch (error) {
         res.status(500).json(error)

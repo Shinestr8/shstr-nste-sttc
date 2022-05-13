@@ -14,10 +14,12 @@ export function PredictionTable(){
     const [data, setData] = useState(null);
     const [count, setCount] = useState(0);
     const [isDataRemaining, setIsDataRemaining] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
   
     useEffect(()=>{
       async function fetchData(){
+        setIsLoading(true);
         const batchSize=20;
         const response = await fetch(`/api/feedback?page=${count}&batchSize=${batchSize}`);
         const result = await response.json();
@@ -26,9 +28,11 @@ export function PredictionTable(){
         }
         if(count === 0){
           setData(result);
+          setIsLoading(false);
         }
         else {
           setData((data) => [...data, ...result]);
+          setIsLoading(false);
         }
         if(ref.current.offsetHeight < height && result.length === batchSize){
             setCount(c => c +1);
@@ -44,7 +48,6 @@ export function PredictionTable(){
     const el = e.target.documentElement;
     const bottom = el.scrollHeight - el.scrollTop - 1 < el.clientHeight;
     if (bottom && isDataRemaining) {
-        console.log("bottom")
         setCount(c => c +1);
         }
     }, [isDataRemaining])
@@ -59,43 +62,51 @@ export function PredictionTable(){
     }, [handleScroll])
     
       
-
-    return(
-        <div id="table-container" ref={ref}>
-            <table id="prediction-table">
-                <thead>
-                    <tr>
-                        <th>Predicted label</th>
-                        <th>True label</th>
-                        <th>Song URL</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data && data.map(function(line, index){
-                        return(
-                            <tr 
-                                key={index}     
-                                className={line.success ? 'prediction-success' : 'prediction-fail'}
-                                id={index === data.length-1 ? 'last' : null}
-                            >
-                                <td>{index +1} {line.predictedLabel}</td>
-                                <td>{line.trueLabel}</td>
-                                <td>
-                                    <a 
-                                        tabIndex="0"
-                                        href={`https://www.youtube.com/watch?v=${line.videoID}`}
-                                        target='_blank'
-                                        rel="noreferrer"
-                                        title={`https://www.youtube.com/watch?v=${line.videoID}`}
-                                    >
-                                        {line.videoID}
-                                    </a>
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
-        </div>
-    )
+    if(data){
+        return(
+            <div id="table-container" ref={ref}>
+                <table id="prediction-table">
+                    <thead>
+                        <tr>
+                            <th>Predicted label</th>
+                            <th>True label</th>
+                            <th>Song URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.map(function(line, index){
+                            return(
+                                <tr 
+                                    key={index}     
+                                    className={line.success ? 'prediction-success' : 'prediction-fail'}
+                                    id={index === data.length-1 ? 'last' : null}
+                                >
+                                    <td>{index +1} {line.predictedLabel}</td>
+                                    <td>{line.trueLabel}</td>
+                                    <td>
+                                        <a 
+                                            tabIndex="0"
+                                            href={`https://www.youtube.com/watch?v=${line.videoID}`}
+                                            target='_blank'
+                                            rel="noreferrer"
+                                            title={`https://www.youtube.com/watch?v=${line.videoID}`}
+                                        >
+                                            {line.videoID}
+                                        </a>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+                {isLoading && (
+                    <div>Loading...</div>
+                )}
+                {!isDataRemaining &&(
+                    <div style={{paddingTop:'1rem'}}>No more data to show</div>
+                )}
+            </div>
+        )
+    }
+    
 }

@@ -1,5 +1,5 @@
 
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, useCallback } from "react"
 import useWindowDimensions from "./tool/windowDimensions";
 
 
@@ -10,63 +10,64 @@ export function PredictionTable(){
 
     const {height, width} = useWindowDimensions()
 
-    
-    
-
 
     const [data, setData] = useState(null);
     const [count, setCount] = useState(0);
+    const [isDataRemaining, setIsDataRemaining] = useState(true);
 
 
-    // useEffect(() => {
-    //     console.log("height", ref.current.offsetHeight);
-    //     console.log("total", height)
-    //     if(ref.current.offsetHeight < height){
-    //         setCount(c=>c+1)
-    //     }
-    //   }, []);
+    function increment(from){
+      setCount(c => c +1);
+      console.log("from", from)
+    }
 
+  
     useEffect(()=>{
-        async function fetchData(){
-          const response = await fetch(`/api/feedback?page=${count}`);
-          const result = await response.json();
-          if(count === 0){
-            setData(result);
-          }
-          else {
-            setData((data) => [...data, ...result]);
-          }
-          if(ref.current.offsetHeight < height && result.length > 0){
-              setCount(c=>c+1)
-          }
+      async function fetchData(){
+        const batchSize=20;
+        const response = await fetch(`/api/feedback?page=${count}&batchSize=${batchSize}`);
+        const result = await response.json();
+        // console.log("result length" + result.length, count)
+        if(result.length < batchSize){
+          setIsDataRemaining(false);
         }
-        fetchData()
-        
-      }, [count, height])
+        if(count === 0){
+          setData(result);
+          console.log("initial data", count)
+        }
+        else {
+          setData((data) => [...data, ...result]);
+          console.log("more data", count)
+        }
+        if(ref.current.offsetHeight < height && result.length === batchSize){
+            increment("fill")
+        }
+      }
+      fetchData()
+      
+    }, [count, height])
 
-
-      function handleScroll(e){
+      const handleScroll = useCallback(function(e){
+        console.log("Elder scroll")
         const el = e.target.documentElement;
         const bottom = el.scrollHeight - el.scrollTop - 1 < el.clientHeight;
-        if (bottom) {
-          setCount(c => c+1)
+        if (bottom && isDataRemaining) {
+          console.log("bottom")
+          increment("scroll")
          }
-      }
+      }, [isDataRemaining])
 
     useEffect(()=>{
         window.addEventListener('scroll',handleScroll);
         return(function(){
             window.removeEventListener("scroll", handleScroll)
         })
-    }, [])
+    }, [handleScroll])
     
       
 
     return(
-        <div 
-            id="table-container" 
-            ref={ref}
-        >
+        <div id="table-container" ref={ref}>
             <table id="prediction-table">
                 <thead>
                     <tr>
@@ -83,7 +84,7 @@ export function PredictionTable(){
                                 className={line.success ? 'prediction-success' : 'prediction-fail'}
                                 id={index === data.length-1 ? 'last' : null}
                             >
-                                <td>{index} {line.predictedLabel}</td>
+                                <td>{index +1} {line.predictedLabel}</td>
                                 <td>{line.trueLabel}</td>
                                 <td>
                                     <a 

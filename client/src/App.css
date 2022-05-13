@@ -384,8 +384,10 @@ ul{
     border-bottom-right-radius: 0px;
   }
 
-  #table-container{
-    width:100%;
+
+
+  #prediction-table{
+    width: 100%;
   }
   
   .about-text{

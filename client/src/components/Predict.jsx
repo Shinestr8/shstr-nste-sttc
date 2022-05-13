@@ -104,7 +104,7 @@ export function Predict(){
                 )}
 
                 {!loading && !data && (
-                    <PredictionTable/>
+                    <PredictionTable isPreview={true}/>
                 )}
 
                 {/* Error */}

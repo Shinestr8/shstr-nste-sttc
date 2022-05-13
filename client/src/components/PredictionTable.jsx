@@ -1,10 +1,11 @@
-
 import { useEffect, useState, useRef, useCallback } from "react"
 import useWindowDimensions from "./tool/windowDimensions";
 
 
 
-export function PredictionTable(){
+export function PredictionTable(props){
+
+    const isPreview = props.isPreview;
 
     const ref = useRef(null);
 
@@ -18,29 +19,43 @@ export function PredictionTable(){
 
   
     useEffect(()=>{
-      async function fetchData(){
-        setIsLoading(true);
-        const batchSize=20;
-        const response = await fetch(`/api/feedback?page=${count}&batchSize=${batchSize}`);
-        const result = await response.json();
-        if(result.length < batchSize){
-          setIsDataRemaining(false);
+        async function fetchLatestData(){
+            setIsLoading(true);
+            const batchSize = 10;
+            const response = await fetch(`/api/feedback?page=0&batchSize=${batchSize}`);
+            const result = await response.json();
+            setData(result);
+            setIsLoading(false);
+        }  
+
+        async function fetchBatchData(){
+            setIsLoading(true);
+            const batchSize=20;
+            const response = await fetch(`/api/feedback?page=${count}&batchSize=${batchSize}`);
+            const result = await response.json();
+            if(result.length < batchSize){
+            setIsDataRemaining(false);
+            }
+            if(count === 0){
+            setData(result);
+            setIsLoading(false);
+            }
+            else {
+            setData((data) => [...data, ...result]);
+            setIsLoading(false);
+            }
+            if(ref.current.offsetHeight < height && result.length === batchSize){
+                setCount(c => c +1);
+            }
         }
-        if(count === 0){
-          setData(result);
-          setIsLoading(false);
+        if(!isPreview){
+            fetchBatchData()
+        } else {
+            fetchLatestData()
         }
-        else {
-          setData((data) => [...data, ...result]);
-          setIsLoading(false);
-        }
-        if(ref.current.offsetHeight < height && result.length === batchSize){
-            setCount(c => c +1);
-        }
-      }
-      fetchData()
+        
       
-    }, [count, height])
+    }, [count, height, isPreview])
 
 
 
@@ -55,11 +70,14 @@ export function PredictionTable(){
 
 
     useEffect(()=>{
-        window.addEventListener('scroll',handleScroll);
-        return(function(){
-            window.removeEventListener("scroll", handleScroll)
-        })
-    }, [handleScroll])
+        if(!isPreview){
+            window.addEventListener('scroll',handleScroll);
+            return(function(){
+                window.removeEventListener("scroll", handleScroll)
+            })
+        }
+        
+    }, [handleScroll, isPreview])
     
       
     if(data){
@@ -102,7 +120,7 @@ export function PredictionTable(){
                 {isLoading && (
                     <div>Loading...</div>
                 )}
-                {!isDataRemaining &&(
+                {!isDataRemaining && !isPreview &&(
                     <div style={{paddingTop:'1rem'}}>No more data to show</div>
                 )}
             </div>

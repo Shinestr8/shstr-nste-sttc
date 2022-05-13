@@ -8,18 +8,12 @@ export function PredictionTable(){
 
     const ref = useRef(null);
 
-    const {height, width} = useWindowDimensions()
+    const {height} = useWindowDimensions()
 
 
     const [data, setData] = useState(null);
     const [count, setCount] = useState(0);
     const [isDataRemaining, setIsDataRemaining] = useState(true);
-
-
-    function increment(from){
-      setCount(c => c +1);
-      console.log("from", from)
-    }
 
   
     useEffect(()=>{
@@ -27,35 +21,35 @@ export function PredictionTable(){
         const batchSize=20;
         const response = await fetch(`/api/feedback?page=${count}&batchSize=${batchSize}`);
         const result = await response.json();
-        // console.log("result length" + result.length, count)
         if(result.length < batchSize){
           setIsDataRemaining(false);
         }
         if(count === 0){
           setData(result);
-          console.log("initial data", count)
         }
         else {
           setData((data) => [...data, ...result]);
-          console.log("more data", count)
         }
         if(ref.current.offsetHeight < height && result.length === batchSize){
-            increment("fill")
+            setCount(c => c +1);
         }
       }
       fetchData()
       
     }, [count, height])
 
-      const handleScroll = useCallback(function(e){
-        console.log("Elder scroll")
-        const el = e.target.documentElement;
-        const bottom = el.scrollHeight - el.scrollTop - 1 < el.clientHeight;
-        if (bottom && isDataRemaining) {
-          console.log("bottom")
-          increment("scroll")
-         }
-      }, [isDataRemaining])
+
+
+    const handleScroll = useCallback(function(e){
+    const el = e.target.documentElement;
+    const bottom = el.scrollHeight - el.scrollTop - 1 < el.clientHeight;
+    if (bottom && isDataRemaining) {
+        console.log("bottom")
+        setCount(c => c +1);
+        }
+    }, [isDataRemaining])
+
+
 
     useEffect(()=>{
         window.addEventListener('scroll',handleScroll);

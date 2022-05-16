@@ -49,6 +49,7 @@ export function ImprovementModalBody(props){
         }
         console.log(videoID);
         let result = {
+            "data": props.data,
             "predictedLabel": props.guess,
             "trueLabel": props.guess,
             "success": true,
@@ -57,6 +58,7 @@ export function ImprovementModalBody(props){
         
         if(!isGoodGuess && realGenre && realGenre !== "Other"){
             result = {
+                    "data": props.data,
                     "predictedLabel": props.guess,
                     "trueLabel": realGenre.toLowerCase(),
                     "success": props.guess.toLowerCase() === realGenre.toLowerCase(),
@@ -65,6 +67,7 @@ export function ImprovementModalBody(props){
         }
         if(!isGoodGuess && realGenre && realGenre === "Other"){
             result = {
+                "data": props.data,
                 "predictedLabel": props.guess,
                 "trueLabel": genreProposition.toLowerCase(),
                 "success": props.guess.toLowerCase() === realGenre.toLowerCase(),

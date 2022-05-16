@@ -14,8 +14,8 @@ router.get('/',  async (req, res) =>{
 
 router.post('/', function(req, res){
     try {
-        const {predictedLabel, trueLabel, success, videoID} = req.body;
-        const newFeedback = new Feedback({predictedLabel:predictedLabel, trueLabel: trueLabel, videoID: videoID, success: success})
+        const {data, predictedLabel, trueLabel, success, videoID} = req.body;
+        const newFeedback = new Feedback({data: data, predictedLabel:predictedLabel, trueLabel: trueLabel, videoID: videoID, success: success})
         newFeedback.save(function(err){
             if(err) {
                 console.log(err);

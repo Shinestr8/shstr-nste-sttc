@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef, useCallback } from "react"
-import useWindowDimensions from "./tool/windowDimensions";
-
+import useWindowDimensions from "../tool/windowDimensions";
+import { useNavigate } from "react-router-dom";
 
 
 export function PredictionTable(props){
 
     const isPreview = props.isPreview;
 
+    const navigate = useNavigate();
     const ref = useRef(null);
 
     const {height} = useWindowDimensions()
@@ -80,7 +81,16 @@ export function PredictionTable(props){
     }, [handleScroll, isPreview])
     
       
+    function handleLineClick(id){
+        navigate(`/prediction/${id}`);
+    }
+
+    function handleLinkClick(e){
+        e.stopPropagation();
+    }
+
     if(data){
+        console.log(data);
         return(
             <div id="table-container" ref={ref}>
                 <table id="prediction-table">
@@ -95,7 +105,8 @@ export function PredictionTable(props){
                         {data.map(function(line, index){
                             return(
                                 <tr 
-                                    key={index}     
+                                    onClick={()=>{handleLineClick(line._id)}}
+                                    key={line._id}     
                                     className={line.success ? 'prediction-success' : 'prediction-fail'}
                                     id={index === data.length-1 ? 'last' : null}
                                 >
@@ -103,6 +114,7 @@ export function PredictionTable(props){
                                     <td>{line.trueLabel}</td>
                                     <td>
                                         <a 
+                                            onClick={handleLinkClick}
                                             tabIndex="0"
                                             href={`https://www.youtube.com/watch?v=${line.videoID}`}
                                             target='_blank'

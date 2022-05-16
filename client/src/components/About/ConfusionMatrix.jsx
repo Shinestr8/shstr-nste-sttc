@@ -1,5 +1,5 @@
 import { HeatMapGrid } from 'react-grid-heatmap';
-import useWindowDimensions from './tool/windowDimensions';
+import useWindowDimensions from '../tool/windowDimensions';
 import { useEffect, useState } from 'react';
 
 

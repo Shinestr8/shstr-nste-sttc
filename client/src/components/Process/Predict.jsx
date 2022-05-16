@@ -1,14 +1,13 @@
 import {useState, useEffect, useMemo} from "react";
 
-import { Histogram } from "./Histogram";
-import { GenreRadarChart } from "./GenreRadarChart";
-import { Modal } from "./Modal";
-import { Toaster } from "./Toaster";
-import { LoadingIcon } from "./Icons/LoadingIcon";
+import { Histogram } from "../Charts/Histogram";
+import { GenreRadarChart } from "../Charts/GenreRadarChart";
+import { Modal } from "../General/Modal/Modal";
+import { Toaster } from "../General/Toaster/Toaster";
+import { LoadingIcon } from "../General/Icons/LoadingIcon";
 import { ImprovementModalBody } from "./ImprovementModalBody";
 
-import '../App.css';
-import { PredictionTable } from "./PredictionTable";
+import { PredictionTable } from "../Prediction/PredictionTable";
 
 
 export function Predict(){

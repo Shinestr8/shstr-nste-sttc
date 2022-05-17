@@ -46,11 +46,9 @@ export function Predict(){
         let videoID = "";
         if(youtubeURL.includes("watch?v=")){
             videoID = youtubeURL.split("&")[0].split('watch?v=')[1];
-            console.log(videoID)
         }
         if(youtubeURL.includes("youtu.be")){
             videoID = youtubeURL.split("&")[0].split('youtu.be/')[1];
-            console.log(videoID)
         }
         try{
             const response = await fetch("/api/feedback/videoid/" + videoID);

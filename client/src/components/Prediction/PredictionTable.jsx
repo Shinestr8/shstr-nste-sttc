@@ -90,7 +90,6 @@ export function PredictionTable(props){
     }
 
     if(data){
-        console.log(data);
         return(
             <div id="table-container" ref={ref}>
                 <table id="prediction-table">

@@ -11,7 +11,6 @@ export function ImprovementModalBody(props){
 
 
     function onValueChange(e){
-        // console.log(e.target.value);
         setRealGenre(null);
         setGenreProposition(null);
         if(e.target.value === "Yes"){
@@ -34,7 +33,6 @@ export function ImprovementModalBody(props){
             body: JSON.stringify(data)
         })
         const content = await response.json();
-        console.log(content);
     }
 
 
@@ -47,7 +45,6 @@ export function ImprovementModalBody(props){
         if(props.url.includes("youtu.be/")){
             videoID = props.url.split("youtu.be/")[1]
         }
-        console.log(videoID);
         let result = {
             "data": props.data,
             "predictedLabel": props.guess,
@@ -80,7 +77,6 @@ export function ImprovementModalBody(props){
     }
 
     function onGenreValueChange(e){
-        // console.log(e.target.value);
         setRealGenre(e.target.value);
         setGenreProposition("");
         if(e.target.value !== "Other"){

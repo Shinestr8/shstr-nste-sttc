@@ -184,6 +184,12 @@ form button:disabled{
   border-top: 3px solid #FFD1FF;
 }
 
+#no-data-prediction{
+  padding: 1rem;
+  width: 80%;
+  background-color: #ffffff;
+  text-align: center;
+}
 
 .recharts-line .recharts-curve {
   stroke: none;

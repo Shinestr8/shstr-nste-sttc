@@ -23,8 +23,7 @@ export function ImprovementModalBody(props){
     }
 
     async function sendData(data){
-        
-        const response = await fetch('/api/feedback', {
+        fetch('/api/feedback', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -32,7 +31,6 @@ export function ImprovementModalBody(props){
             },
             body: JSON.stringify(data)
         })
-        const content = await response.json();
     }
 
 

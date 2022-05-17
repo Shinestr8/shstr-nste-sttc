@@ -2,17 +2,22 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Histogram } from "../Charts/Histogram";
 import { GenreRadarChart } from "../Charts/GenreRadarChart";
+import { LoadingIcon } from "../General/Icons/LoadingIcon";
 
 export function Prediction(){
 
     const {id} = useParams();
     const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(false);
+
 
     useEffect(()=>{
         async function fetchLatestData(){
+            setLoading(true);
             const response = await fetch(`/api/feedback/${id}`);
             const result = await response.json();
             setData(result);
+            setLoading(false);
         }
         fetchLatestData()
     }, [id])
@@ -22,6 +27,14 @@ export function Prediction(){
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
     
+    if(loading){
+        return(
+            <div style={{textAlign:"center", padding: "1rem"}}>
+                <LoadingIcon/>
+            </div>
+            
+        )
+    }
 
     if(data && data.data.rawData.length === 0){
         return(
@@ -51,7 +64,15 @@ export function Prediction(){
             <div id="predict">
                 <div id="prediction">
                     <div className="top">
-                        predicted <strong>&nbsp;{data.predictedLabel}</strong>, was <strong>&nbsp;{data.trueLabel}</strong>.&nbsp;<a href={`https://www.youtube.com/watch?v=${data.videoID}`}>  Listen on youtube </a>
+                        predicted <strong>&nbsp;{data.predictedLabel}</strong>, was <strong>&nbsp;{data.trueLabel}</strong>.&nbsp;<a
+                        tabIndex="0"
+                        href={`https://www.youtube.com/watch?v=${data.videoID}`}
+                        target='_blank'
+                        rel="noreferrer"
+                        title={`https://www.youtube.com/watch?v=${data.videoID}`}
+                    >
+                    Listen on youtube
+                </a>
                     </div>
                     <div className="top-left">
                         <ul>

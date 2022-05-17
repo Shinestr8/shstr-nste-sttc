@@ -384,6 +384,18 @@ ul{
   border-radius: 15px;
 }
 
+.circle-check{
+  width: 1.2rem;
+  fill: #6EE29E;
+  vertical-align: top;
+}
+
+.circle-xmark{
+  width: 1.2rem;
+  fill:#FF6768;
+  vertical-align: top;
+}
+
 
 @media screen and (max-width: 1200px){
 

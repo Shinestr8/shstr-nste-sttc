@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { Histogram } from "../Charts/Histogram";
 import { GenreRadarChart } from "../Charts/GenreRadarChart";
 import { LoadingIcon } from "../General/Icons/LoadingIcon";
+import { CircleCheck } from "../General/Icons/CircleCheck";
+import { CircleXMark } from "../General/Icons/CircleXMark";
 
 export function Prediction(){
 
@@ -40,7 +42,7 @@ export function Prediction(){
         return(
             <div id="predict">
                 <div id="no-data-prediction">
-                predicted <strong>&nbsp;{data.predictedLabel}</strong>, was <strong>&nbsp;{data.trueLabel}</strong>.&nbsp;
+                predicted <strong>&nbsp;{data.predictedLabel}</strong>, was <strong>&nbsp;{data.trueLabel}</strong> {data.success ? <CircleCheck/> : <CircleXMark/>}&nbsp;
                 <a
                     tabIndex="0"
                     href={`https://www.youtube.com/watch?v=${data.videoID}`}

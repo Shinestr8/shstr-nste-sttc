@@ -66,7 +66,7 @@ export function Prediction(){
             <div id="predict">
                 <div id="prediction">
                     <div className="top">
-                    predicted <strong>&nbsp;{data.predictedLabel}</strong>, was <strong>&nbsp;{data.trueLabel}</strong> {data.success ? <CircleCheck/> : <CircleXMark/>}&nbsp;<a
+                    predicted <strong>&nbsp;{data.predictedLabel}</strong>, was <strong>&nbsp;{data.trueLabel}&nbsp;</strong> {data.success ? <CircleCheck/> : <CircleXMark/>}&nbsp;<a
                         tabIndex="0"
                         href={`https://www.youtube.com/watch?v=${data.videoID}`}
                         target='_blank'

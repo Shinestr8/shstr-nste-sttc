@@ -395,7 +395,6 @@ ul{
 }
 
 .circle-check{
-  background-color: black;
   width: 1.2rem;
   fill: var(--success);
   vertical-align: top;

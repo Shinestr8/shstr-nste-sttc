@@ -13,7 +13,8 @@ import { PredictionTable } from "../Prediction/PredictionTable";
 export function Predict(){
 
     const [youtubeURL, setYoutubeURL] = useState("");
-    const [data, setData] = useState(null)
+    const [processedURL, setProcessURL] = useState("");
+    const [data, setData] = useState(null);
     // const [data, setData] = useState({"guess":[{"name":"hiphop","count":134},{"name":"pop","count":44},{"name":"classical","count":31},{"name":"jazz","count":17},{"name":"reggae","count":8},{"name":"country","count":3},{"name":"disco","count":2},{"name":"metal","count":2},{"name":"blues","count":1}],"higherGuess":"hiphop","higherCount":134,"total":242,"message":"success","rawData":[5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,8,4,4,8,7,4,4,7,7,7,4,7,4,8,4,8,4,4,4,4,4,4,7,8,7,4,4,4,7,4,4,4,4,4,4,4,4,4,4,7,4,7,7,7,8,2,8,7,4,4,4,4,4,4,4,7,7,4,7,4,7,7,4,7,4,4,4,4,2,4,7,7,4,4,4,4,7,4,4,4,4,4,4,7,4,4,4,4,4,4,7,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,7,7,4,4,7,4,5,5,5,5,5,7,5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,1,1,4,6,4,4,6,4,4,2,4,4,0,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,7,8,4,7,7,7,7,7,7,7,7,7,4,7,7,4,7,7,7,7,1,4,5,5,1,1,1,1]})
     const [loading, setLoading] = useState(false);
     const [isModalShowing, setShowModal] = useState(false);
@@ -40,15 +41,45 @@ export function Predict(){
     function handleValueChange(e){
         setYoutubeURL(e.target.value);
     }
+
+    async function checkDB(){
+        let videoID = "";
+        if(youtubeURL.includes("watch?v=")){
+            videoID = youtubeURL.split("&")[0].split('watch?v=')[1];
+            console.log(videoID)
+        }
+        if(youtubeURL.includes("youtu.be")){
+            videoID = youtubeURL.split("&")[0].split('youtu.be/')[1];
+            console.log(videoID)
+        }
+        try{
+            const response = await fetch("/api/feedback/videoid/" + videoID);
+            const dbData = await response.json();
+            console.log("checking db")
+            console.log(dbData)
+            if(dbData !== null){
+                setData(dbData.data);
+                setLoading(false);
+                return true;
+            }
+        } catch(error){
+            setData({message: "An error occured, please try again later"})
+            setLoading(false);  
+        }
+    }
     
     async function submitLink(e){
         e.preventDefault();
+        setLoading(true);
+        setData(null);
+        setProcessURL(youtubeURL);
+        if(checkDB()){
+            return
+        }
         if(!(youtubeURL.includes("watch?v=") || youtubeURL.includes("youtu.be"))){
             setData({message: "invalid URL"});
             return
         }
-        setData(null);
-        setLoading(true);
         try{
             const response = await fetch("/ai/predict?url="+youtubeURL);
             const newData = await response.json();
@@ -133,7 +164,7 @@ export function Predict(){
                                     showAlert={()=>setShowToaster(true)} 
                                     guess={data.higherGuess} 
                                     toggleShow={toggleShowModal}
-                                    url={youtubeURL}
+                                    url={processedURL}
                                     data={data}
                                 />
                             </Modal>

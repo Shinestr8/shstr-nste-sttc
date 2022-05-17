@@ -4,6 +4,7 @@ html, body, #root{
   height: 100%;
   width: 100%;
   font-family: Helvetica, Arial, sans-serif;
+  word-wrap: break-word;
 }
 
 #logo{
@@ -184,7 +185,6 @@ form button:disabled{
 }
 
 
-
 .recharts-line .recharts-curve {
   stroke: none;
 }
@@ -338,9 +338,22 @@ ul{
 }
 
 #prediction-table tbody tr td{
+  cursor: pointer;
   padding: 0.5rem;
   width: 33%;
   word-break: break-all;
+}
+
+#prediction-table tbody tr:hover{
+  background-color: #4e4eff;
+}
+
+#prediction-table tbody tr:hover a:hover{
+  font-weight: bold;
+}
+
+#prediction-table tbody tr:hover a{
+  color: #ffffff;
 }
 
 #prediction-table tbody tr:last-child td:first-child{

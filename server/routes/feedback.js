@@ -3,14 +3,22 @@ const router = express.Router();
 const Feedback = require('../models/feedback')
 
 
-router.get('/:id', async function(req, res){
+router.get('/id/:id', async function(req, res){
     try{
-        const feedback = await Feedback.findById(req.params.id)
-        res.status(200).json(feedback)
+        const feedback = await Feedback.findById(req.params.id);
+        res.status(200).json(feedback);
     } catch(error){
-        res.status(500).json(error)
+        res.status(500).json(error);
     }
-    
+})
+
+router.get('/videoid/:videoid', async function(req, res){
+    try{
+        const feedback = await Feedback.findOne({videoID: req.params.videoid});
+        res.status(200).json(feedback);
+    } catch(error){
+        res.status(500).json(error);
+    }
 })
 
 router.get('/',  async (req, res) =>{

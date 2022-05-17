@@ -14,7 +14,7 @@ export function Prediction(){
     useEffect(()=>{
         async function fetchLatestData(){
             setLoading(true);
-            const response = await fetch(`/api/feedback/${id}`);
+            const response = await fetch(`/api/feedback/id/${id}`);
             const result = await response.json();
             setData(result);
             setLoading(false);

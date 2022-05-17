@@ -3,7 +3,18 @@ const router = express.Router();
 const Feedback = require('../models/feedback')
 
 
+router.get('/:id', async function(req, res){
+    try{
+        const feedback = await Feedback.findById(req.params.id)
+        res.status(200).json(feedback)
+    } catch(error){
+        res.status(500).json(error)
+    }
+    
+})
+
 router.get('/',  async (req, res) =>{
+    console.log("find all")
     try {
         const feedbacks = await Feedback.find().sort({ _id: -1 }).skip(req.query.page*req.query.batchSize).limit(req.query.batchSize);
         res.status(200).json(feedbacks)

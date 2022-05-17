@@ -53,14 +53,16 @@ export function Predict(){
         try{
             const response = await fetch("/api/feedback/videoid/" + videoID);
             const dbData = await response.json();
-            if(dbData !== null){
+            if(dbData.data.rawData.length !== 0){
+                
                 setData(dbData.data);
                 setLoading(false);
                 return true;
             }
+            return false;
         } catch(error){
             setData({message: "An error occured, please try again later"})
-            setLoading(false);  
+            return false;
         }
     }
     
@@ -69,8 +71,8 @@ export function Predict(){
         setLoading(true);
         setData(null);
         setProcessURL(youtubeURL);
-        if(checkDB()){
-            return
+        if(checkDB() === true){
+            return;
         }
         if(!(youtubeURL.includes("watch?v=") || youtubeURL.includes("youtu.be"))){
             setData({message: "invalid URL"});

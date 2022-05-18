@@ -390,6 +390,11 @@ ul{
   color: var(--font-light);
 }
 
+.prediction-unknown{
+  background-color: #ffd455;
+  color: white;
+}
+
 #last{
   border-radius: 15px;
 }

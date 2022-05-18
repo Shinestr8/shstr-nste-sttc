@@ -89,6 +89,19 @@ export function PredictionTable(props){
         e.stopPropagation();
     }
 
+    function processClassname(success){
+        console.log(success);
+        if(success===undefined){
+            return 'prediction-unknown';
+        }
+        if(success === true){
+            return 'prediction-success';
+        }
+        if(success === false){
+            return 'prediction-fail'
+        }
+    }
+
     if(data){
         return(
             <div id="table-container" ref={ref}>
@@ -102,11 +115,12 @@ export function PredictionTable(props){
                     </thead>
                     <tbody>
                         {data.map(function(line, index){
+                            processClassname(line.success);
                             return(
                                 <tr 
                                     onClick={()=>{handleLineClick(line._id)}}
-                                    key={line._id}     
-                                    className={line.success ? 'prediction-success' : 'prediction-fail'}
+                                    key={index + line._id}     
+                                    className={processClassname(line.success)}
                                     id={index === data.length-1 ? 'last' : null}
                                 >
                                     <td>{line.predictedLabel}</td>

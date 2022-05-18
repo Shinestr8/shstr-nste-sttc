@@ -43,16 +43,14 @@ const feedbackSchema = new mongoose.Schema({
         required: true
     },
     trueLabel: {
-        type: String,
-        required: true
+        type: String
     },
     videoID:{
         type:String,
         required: true
     },
     success:{   
-        type: Boolean,
-        required: true
+        type: Boolean
     }
 })
 

@@ -23,7 +23,8 @@ export function ImprovementModalBody(props){
     }
 
     async function sendData(data){
-        fetch('/api/feedback', {
+        console.log(data);
+        fetch(`/api/feedback/id/${props.id}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -36,37 +37,21 @@ export function ImprovementModalBody(props){
 
     function handleSubmit(e){
         e.preventDefault();
-        let videoID = "";
-        if(props.url.includes("watch?v=")){
-            videoID = props.url.split("&")[0].split("?v=")[1];
-        }
-        if(props.url.includes("youtu.be/")){
-            videoID = props.url.split("youtu.be/")[1]
-        }
         let result = {
-            "data": props.data,
-            "predictedLabel": props.guess,
             "trueLabel": props.guess,
-            "success": true,
-            "videoID": videoID
+            "success": true
         }
         
         if(!isGoodGuess && realGenre && realGenre !== "Other"){
             result = {
-                    "data": props.data,
-                    "predictedLabel": props.guess,
                     "trueLabel": realGenre.toLowerCase(),
-                    "success": props.guess.toLowerCase() === realGenre.toLowerCase(),
-                    "videoID": videoID
+                    "success": props.guess.toLowerCase() === realGenre.toLowerCase()
                 }
         }
         if(!isGoodGuess && realGenre && realGenre === "Other"){
             result = {
-                "data": props.data,
-                "predictedLabel": props.guess,
                 "trueLabel": genreProposition.toLowerCase(),
-                "success": props.guess.toLowerCase() === realGenre.toLowerCase(),
-                "videoID": videoID
+                "success": props.guess.toLowerCase() === realGenre.toLowerCase()
             }
         }
         sendData(result);
@@ -98,7 +83,7 @@ export function ImprovementModalBody(props){
         <form>
             
             <section onChange={onValueChange}>
-                <p>Is {props.guess} a good guess ?</p>
+                <p>Is {props.guess} a good guess ? {props.id}</p>
                 <input type="radio" id="Yes" name="guess-quality" value="Yes"/>
                 <label htmlFor="Yes">Yes</label>
 

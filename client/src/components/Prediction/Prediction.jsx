@@ -97,7 +97,6 @@ export function Prediction(){
                         </div>  
                     </div>
                     <div className="top-right">
-                             {/*Comes from radar Error: <path> attribute d: Expected number, "M NaN,NaNL NaN,NaN…". */}
                         <GenreRadarChart data={data.data}/>
                     </div>
                     <div className="bottom">

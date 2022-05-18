@@ -19,7 +19,7 @@ export function Predict(){
     const [loading, setLoading] = useState(false);
     const [isModalShowing, setShowModal] = useState(false);
     const [showToaster, setShowToaster] = useState(false);
-
+    const [id, setId] = useState(null);
 
     useEffect(function(){
         let timer;
@@ -42,28 +42,45 @@ export function Predict(){
         setYoutubeURL(e.target.value);
     }
 
-    async function checkDB(){
-        let videoID = "";
-        if(youtubeURL.includes("watch?v=")){
-            videoID = youtubeURL.split("&")[0].split('watch?v=')[1];
-        }
-        if(youtubeURL.includes("youtu.be")){
-            videoID = youtubeURL.split("&")[0].split('youtu.be/')[1];
-        }
+    async function checkDB(videoID){
         try{
             const response = await fetch("/api/feedback/videoid/" + videoID);
             const dbData = await response.json();
+            console.log("checking db")
+            console.log(dbData.data.rawData.length);
+            // console.log(dbData.rawData.length)
             if(dbData.data.rawData.length !== 0){
-                
                 setData(dbData.data);
+                setId((dbData._id));
                 setLoading(false);
                 return true;
             }
             return false;
         } catch(error){
-            setData({message: "An error occured, please try again later"})
+            // setData({message: "An error occured, please try again later"})
             return false;
         }
+    }
+
+    async function saveData(newData, videoID){
+        
+        const newFeedback = {
+            data: newData,
+            predictedLabel: newData.higherGuess,
+            videoID: videoID,
+            trueLabel: undefined,
+            success: undefined
+        }
+        const response = await fetch('/api/feedback', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newFeedback)
+        })
+        const newID = await response.json();
+        setId(newID);
     }
     
     async function submitLink(e){
@@ -71,7 +88,14 @@ export function Predict(){
         setLoading(true);
         setData(null);
         setProcessURL(youtubeURL);
-        if(checkDB() === true){
+        let videoID = "";
+        if(youtubeURL.includes("watch?v=")){
+            videoID = youtubeURL.split("&")[0].split('watch?v=')[1];
+        }
+        if(youtubeURL.includes("youtu.be")){
+            videoID = youtubeURL.split("&")[0].split('youtu.be/')[1];
+        }
+        if(await checkDB(videoID) === true){
             return;
         }
         if(!(youtubeURL.includes("watch?v=") || youtubeURL.includes("youtu.be"))){
@@ -83,11 +107,12 @@ export function Predict(){
             const newData = await response.json();
             setData(newData);
             setLoading(false);
+            saveData(newData, videoID);
         }
         catch(e){
             setData({message: "An error occured, please try again later"})
             setLoading(false);  
-        }    
+        }
     }
 
 
@@ -135,6 +160,8 @@ export function Predict(){
                     <PredictionTable isPreview={true}/>
                 )}
 
+                {id && (JSON.stringify(id))}
+
                 {/* Error */}
                 {data && data.message!=="success" &&(
                     <div className="error-message">
@@ -164,6 +191,7 @@ export function Predict(){
                                     toggleShow={toggleShowModal}
                                     url={processedURL}
                                     data={data}
+                                    id={id}
                                 />
                             </Modal>
                             <Toaster 

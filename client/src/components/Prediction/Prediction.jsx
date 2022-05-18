@@ -5,13 +5,35 @@ import { GenreRadarChart } from "../Charts/GenreRadarChart";
 import { LoadingIcon } from "../General/Icons/LoadingIcon";
 import { CircleCheck } from "../General/Icons/CircleCheck";
 import { CircleXMark } from "../General/Icons/CircleXMark";
+import { Modal } from "../General/Modal/Modal";
+import { ImprovementModalBody } from "../Process/ImprovementModalBody";
+import { Toaster } from "../General/Toaster/Toaster";
 
 export function Prediction(){
 
     const {id} = useParams();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [isModalShowing, setShowModal] = useState(false);
+    const [showToaster, setShowToaster] = useState(false);
 
+
+    useEffect(function(){
+        let timer;
+        if(showToaster){
+            timer = setTimeout(function(){
+                setShowToaster(false);
+            }, 5000);
+        }
+        return(function(){
+            window.clearTimeout(timer)
+        })
+    }, [showToaster])
+
+
+    function toggleShowModal(){
+        setShowModal(prev => !prev);
+    }
 
     useEffect(()=>{
         async function fetchLatestData(){
@@ -65,17 +87,51 @@ export function Prediction(){
         return(
             <div id="predict">
                 <div id="prediction">
-                    <div className="top">
-                    predicted <strong>&nbsp;{data.predictedLabel}</strong>, was <strong>&nbsp;{data.trueLabel}&nbsp;</strong> {data.success ? <CircleCheck/> : <CircleXMark/>}&nbsp;<a
-                        tabIndex="0"
-                        href={`https://www.youtube.com/watch?v=${data.videoID}`}
-                        target='_blank'
-                        rel="noreferrer"
-                        title={`https://www.youtube.com/watch?v=${data.videoID}`}
-                    >
-                    Listen on youtube
-                </a>
-                    </div>
+                    {data.trueLabel && (
+                        <div className="top">
+                        predicted <strong>&nbsp;{data.predictedLabel}</strong>, was <strong>&nbsp;{data.trueLabel}&nbsp;</strong> {data.success ? <CircleCheck/> : <CircleXMark/>}&nbsp;<a
+                            tabIndex="0"
+                            href={`https://www.youtube.com/watch?v=${data.videoID}`}
+                            target='_blank'
+                            rel="noreferrer"
+                            title={`https://www.youtube.com/watch?v=${data.videoID}`}
+                        >
+                        Listen on youtube
+                    </a>
+                        </div>
+                    )}
+                    {!data.trueLabel && (
+                        <div className="top">
+                        predicted <strong>&nbsp;{data.predictedLabel}</strong>, unknown true genre. <button onClick={toggleShowModal}>tag this music</button><a
+                            tabIndex="0"
+                            href={`https://www.youtube.com/watch?v=${data.videoID}`}
+                            target='_blank'
+                            rel="noreferrer"
+                            title={`https://www.youtube.com/watch?v=${data.videoID}`}
+                        >
+                        Listen on youtube
+                    </a>
+                    <Modal 
+                                isShowing={isModalShowing} 
+                                toggleShow={toggleShowModal}
+                                modalTitle="Help us improve"
+                            >
+                                <ImprovementModalBody 
+                                    showAlert={()=>setShowToaster(true)} 
+                                    guess={data.data.higherGuess} 
+                                    toggleShow={toggleShowModal}
+                                    id={data._id}
+                                />
+                                
+                            </Modal>
+                            <Toaster 
+                                isShowing={showToaster}
+                                message="Thanks for your feedbacks ❤️"
+                                style={{backgroundColor:"#C3F3D7", border:"1px solid #2FD573"}}
+                            />
+                        </div>
+                    )}
+                    
                     <div className="top-left">
                         <ul>
                             {data.data.guess.map(function(genre, index){

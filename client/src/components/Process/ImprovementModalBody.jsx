@@ -83,7 +83,7 @@ export function ImprovementModalBody(props){
         <form>
             
             <section onChange={onValueChange}>
-                <p>Is {props.guess} a good guess ? {props.id}</p>
+                <p>Is {props.guess} a good guess ?</p>
                 <input type="radio" id="Yes" name="guess-quality" value="Yes"/>
                 <label htmlFor="Yes">Yes</label>
 

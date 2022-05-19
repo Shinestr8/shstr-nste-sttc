@@ -96,6 +96,12 @@ export function PredictionTable(props){
         navigate(`/prediction/${id}`);
     }
 
+    function handleEnterPress(e,id){
+        if(e.key === "Enter"){
+            handleLineClick(id);
+        }
+    }
+
     function handleLinkClick(e){
         e.stopPropagation();
     }
@@ -135,6 +141,8 @@ export function PredictionTable(props){
                             processClassname(line.success);
                             return(
                                 <tr 
+                                    tabIndex="0"
+                                    onKeyUp={(e)=>handleEnterPress(e, line._id)}
                                     onClick={()=>{handleLineClick(line._id)}}
                                     key={index + line._id}     
                                     className={processClassname(line.success)}

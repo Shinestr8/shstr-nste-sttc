@@ -3,6 +3,17 @@ const router = express.Router();
 const Feedback = require('../models/feedback')
 
 
+router.get("/stats", async function(req, res){
+    try {
+        const total = await Feedback.countDocuments({$or:[{success: true}, {success: false}]});
+        const goodPred = await Feedback.countDocuments({success: true});
+        const untagged = await Feedback.countDocuments({success: undefined})
+        res.status(200).json({total: total, goodPred: goodPred, untagged: untagged})
+    } catch (error) {
+        res.status(500).json(error);
+    }
+})
+
 router.get('/id/:id', async function(req, res){
     console.log("find one by id")
     try{

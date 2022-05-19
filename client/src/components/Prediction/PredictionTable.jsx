@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from "react"
 import useWindowDimensions from "../tool/windowDimensions";
 import { useNavigate } from "react-router-dom";
+import { OnoStats } from "./OnoStats";
 
 
 export function PredictionTable(props){
@@ -14,10 +15,20 @@ export function PredictionTable(props){
 
 
     const [data, setData] = useState(null);
+    const [stats, setStats] = useState(null);
     const [count, setCount] = useState(0);
     const [isDataRemaining, setIsDataRemaining] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
+
+    useEffect(()=>{
+        async function loadStats(){
+            const response = await fetch('/api/feedback/stats');
+            const result = await response.json();
+            setStats(result);
+        }
+        loadStats();
+    }, [])
   
     useEffect(()=>{
         async function fetchLatestData(){
@@ -104,6 +115,12 @@ export function PredictionTable(props){
 
     if(data){
         return(
+            <div 
+                style={{display:"flex", flexDirection: "column", alignItems: "center", width:"100%"}}
+            >
+            {!props.isPreview && stats && (
+                <OnoStats data={stats}/>
+            )}
             <div id="table-container" ref={ref}>
                 <table id="prediction-table">
                     <thead>
@@ -149,6 +166,8 @@ export function PredictionTable(props){
                     <div style={{paddingTop:'1rem'}}>No more data to show</div>
                 )}
             </div>
+            </div>
+            
         )
     }
     

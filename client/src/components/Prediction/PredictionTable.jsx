@@ -56,7 +56,7 @@ export function PredictionTable(props){
             setData((data) => [...data, ...result]);
             setIsLoading(false);
             }
-            if(ref.current.offsetHeight < height && result.length === batchSize){
+            if(ref.current && ref.current.offsetHeight < height && result.length === batchSize){
                 setCount(c => c +1);
             }
         }
@@ -107,7 +107,6 @@ export function PredictionTable(props){
     }
 
     function processClassname(success){
-        console.log(success);
         if(success===undefined){
             return 'prediction-unknown';
         }
@@ -148,7 +147,7 @@ export function PredictionTable(props){
                                     className={processClassname(line.success)}
                                     id={index === data.length-1 ? 'last' : null}
                                 >
-                                    <td>{line.predictedLabel}</td>
+                                    <td>{index+1} {line.predictedLabel}</td>
                                     <td>{line.trueLabel}</td>
                                     <td>
                                         <a 

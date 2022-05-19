@@ -23,7 +23,6 @@ export function ImprovementModalBody(props){
     }
 
     async function sendData(data){
-        console.log(data);
         fetch(`/api/feedback/id/${props.id}`, {
             method: 'POST',
             headers: {

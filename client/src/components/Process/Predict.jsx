@@ -46,9 +46,6 @@ export function Predict(){
         try{
             const response = await fetch("/api/feedback/videoid/" + videoID);
             const dbData = await response.json();
-            console.log("checking db")
-            console.log(dbData.data.rawData.length);
-            // console.log(dbData.rawData.length)
             if(dbData.data.rawData.length !== 0){
                 setData(dbData.data);
                 setId((dbData._id));

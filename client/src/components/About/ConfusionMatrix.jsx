@@ -3,7 +3,6 @@ import useWindowDimensions from '../tool/windowDimensions';
 import { useEffect, useState } from 'react';
 
 
-
 export function ConfusionMatrix(){
 
 
@@ -46,9 +45,9 @@ export function ConfusionMatrix(){
   return(
     <div>
         <h4 style={{textAlign: 'center'}}>Confusion matrix (1.5sec segments)</h4>
-        <div id="cm-x-axis-label" style={{textAlign: 'center'}}>
+        {/* <div id="cm-x-axis-label" style={{textAlign: 'center'}}>
           Predicted labels
-        </div>
+        </div> */}
         <div style={{display: 'flex'}}>
             <div 
               id="cm-y-axis-label"
@@ -70,7 +69,8 @@ export function ConfusionMatrix(){
                   cellRender={cellRender}
                   xLabelsStyle={() => ({
                       // color: index % 2 ? 'transparent' : '#777',
-                      fontSize: '.8rem',
+                      // display: 'none',
+                      fontSize: width > 1024 ? '.8rem' : '.4rem',
                       color: width > 1024 ? '#000000' : 'transparent'
                       })}
                   yLabelsStyle={()=>({fontSize: '.8rem'})}

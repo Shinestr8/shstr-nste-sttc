@@ -80,6 +80,7 @@ export function About(){
                         <br/>
                         If we put the song back together and look at the most predicted genre, the accuracy reaches <strong>86%</strong>
                         </p>
+                        <h4 style={{textAlign: 'center'}}>Confusion matrix (1.5sec segments)</h4>
                         <div id="confusion-matrix"> 
                             <ConfusionMatrix/>
                         </div>

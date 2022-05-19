@@ -41,10 +41,14 @@ html, body, #root{
 .navlink a{
   margin-right: 1rem;
   color: var(--font-light);
+  transition-property: font-size;
+  transition-duration: 0.2s;
 }
 
 .navlink a:hover{
   font-size: 105%;
+  transition-property: font-size;
+  transition-duration: 0.2s;
 }
 
 #main-header{

@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useCallback } from "react"
 import useWindowDimensions from "../tool/windowDimensions";
 import { useNavigate } from "react-router-dom";
 import { OnoStats } from "./OnoStats";
+import { LoadingIcon } from "../General/Icons/LoadingIcon";
 
 
 export function PredictionTable(props){
@@ -19,6 +20,17 @@ export function PredictionTable(props){
     const [count, setCount] = useState(0);
     const [isDataRemaining, setIsDataRemaining] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+    const [checked, setChecked] = useState(false);
+    const [displayData, setDisplayData] = useState(null);
+
+    useEffect(()=>{
+        if(data && checked){
+            setDisplayData(data.filter(line=>line.success===undefined))
+        }
+        else{
+            setDisplayData(data)
+        }
+    }, [data, checked])
 
 
     useEffect(()=>{
@@ -65,8 +77,6 @@ export function PredictionTable(props){
         } else {
             fetchLatestData()
         }
-        
-      
     }, [count, height, isPreview])
 
 
@@ -118,15 +128,31 @@ export function PredictionTable(props){
         }
     }
 
-    if(data){
+    function handleCheckboxChange(){
+        setChecked(c=>!c);
+    }
+    
         return(
             <div 
                 style={{display:"flex", flexDirection: "column", alignItems: "center", width:"100%"}}
             >
+            
+            
             {!props.isPreview && stats && (
-                <OnoStats data={stats}/>
+                <>
+                    <OnoStats data={stats}/>
+                    <div id="checkbox" style={{alignSelf: 'flex-start', marginLeft: '10%', marginTop: '1rem'}}>
+                        <input type="checkbox" id="checkbox-untagged" checked={checked} onChange={handleCheckboxChange}/>
+                        <label htmlFor="checkbox-untagged" >Only display untagged</label>
+                    </div>
+                </>
             )}
-            <div id="table-container" ref={ref}>
+
+            {isLoading && <LoadingIcon/>}
+
+            
+            {data && displayData && (
+                <div id="table-container" ref={ref}>
                 <table id="prediction-table">
                     <thead>
                         <tr>
@@ -136,7 +162,7 @@ export function PredictionTable(props){
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map(function(line, index){
+                        {displayData.map(function(line, index){
                             processClassname(line.success);
                             return(
                                 <tr 
@@ -173,9 +199,11 @@ export function PredictionTable(props){
                     <div style={{paddingTop:'1rem'}}>No more data to show</div>
                 )}
             </div>
+            )}
+            
             </div>
             
         )
-    }
+    
     
 }

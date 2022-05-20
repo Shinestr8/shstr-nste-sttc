@@ -40,15 +40,7 @@ router.get('/videoid/:videoid', async function(req, res){
 //find feedback with page number and batchsize
 router.get('/',  async (req, res) =>{
     try {
-        let feedbacks = null;
-        console.log(req.query.untagged);
-        if(req.query.untagged === 'true'){
-            console.log("1")
-            feedbacks = await Feedback.find({success:undefined}).sort({ _id: -1 }).skip(req.query.page*req.query.batchSize).limit(req.query.batchSize);    
-        } else {
-            console.log("2")
-            feedbacks = await Feedback.find().sort({ _id: -1 }).skip(req.query.page*req.query.batchSize).limit(req.query.batchSize);
-        }
+        const feedbacks = await Feedback.find().sort({ _id: -1 }).skip(req.query.page*req.query.batchSize).limit(req.query.batchSize);
         res.status(200).json(feedbacks)
     } catch (error) {
         res.status(500).json(error)

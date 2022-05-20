@@ -3,6 +3,7 @@ const router = express.Router();
 const Feedback = require('../models/feedback')
 
 
+//returns statistics about Onobot, total count of prediction, count of good prediction and count of untagged
 router.get("/stats", async function(req, res){
     try {
         const total = await Feedback.countDocuments({$or:[{success: true}, {success: false}]});
@@ -14,8 +15,8 @@ router.get("/stats", async function(req, res){
     }
 })
 
+//find feedback by id
 router.get('/id/:id', async function(req, res){
-    console.log("find one by id")
     try{
         const feedback = await Feedback.findById(req.params.id);
         res.status(200).json(feedback);
@@ -24,8 +25,9 @@ router.get('/id/:id', async function(req, res){
     }
 })
 
+
+//find feedback by youtube id
 router.get('/videoid/:videoid', async function(req, res){
-    console.log("get one from videoid")
     try{
         const feedback = await Feedback.findOne({videoID: req.params.videoid});
         res.status(200).json(feedback);
@@ -34,8 +36,9 @@ router.get('/videoid/:videoid', async function(req, res){
     }
 })
 
+
+//find feedback with page number and batchsize
 router.get('/',  async (req, res) =>{
-    console.log("get all")
     try {
         const feedbacks = await Feedback.find().sort({ _id: -1 }).skip(req.query.page*req.query.batchSize).limit(req.query.batchSize);
         res.status(200).json(feedbacks)
@@ -44,8 +47,9 @@ router.get('/',  async (req, res) =>{
     }
 })
 
+
+//create new feedbacks
 router.post('/', function(req, res){
-    console.log("create new one")
     try {
         const {data, predictedLabel, trueLabel, success, videoID} = req.body;
         const newFeedback = new Feedback({data: data, predictedLabel:predictedLabel, trueLabel: trueLabel, videoID: videoID, success: success})
@@ -65,8 +69,8 @@ router.post('/', function(req, res){
     }
 })
 
+//edit feedback with id
 router.post("/id/:id", async function(req, res){
-    console.log("edit entry" + req.params.id)
     const {trueLabel, success} = req.body;
     console.log(req.params.id, trueLabel, success);
     try{

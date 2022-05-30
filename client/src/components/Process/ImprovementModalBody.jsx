@@ -110,8 +110,7 @@ export function ImprovementModalBody(props){
             {isGoodGuess === false && realGenre === "Other" && (
                 <section>
                     <p>What is your proposition ?</p>
-                    <input type="text" name="proposition" value={genreProposition} onChange={handlePropositionChange}/>
-                    
+                    <input placeholder="Type the genre you would give to this song" type="text" name="proposition" value={genreProposition} onChange={handlePropositionChange}/>
                 </section>
                 
             )}

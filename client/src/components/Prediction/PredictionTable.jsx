@@ -20,17 +20,26 @@ export function PredictionTable(props){
     const [count, setCount] = useState(0);
     const [isDataRemaining, setIsDataRemaining] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
-    const [checked, setChecked] = useState(false);
     const [displayData, setDisplayData] = useState(null);
+    const [filter, setFilter] = useState('all');
 
     useEffect(()=>{
-        if(data && checked){
-            setDisplayData(data.filter(line=>line.success===undefined))
+        setDisplayData(data);
+        switch(filter){
+            case 'untagged':
+                setDisplayData(data.filter(line=>line.success===undefined))
+                break;
+            case 'success':
+                setDisplayData(data.filter(line=>line.success===true))
+                break;
+            case 'failed':
+                setDisplayData(data.filter(line=>line.success===false))
+                break;
+            default:
+                setDisplayData(data);
+                break;
         }
-        else{
-            setDisplayData(data)
-        }
-    }, [data, checked])
+    }, [data, filter])
 
 
     useEffect(()=>{
@@ -128,8 +137,9 @@ export function PredictionTable(props){
         }
     }
 
-    function handleCheckboxChange(){
-        setChecked(c=>!c);
+
+    function handleRadioChange(e){
+        setFilter(e.target.value)
     }
     
         return(
@@ -141,14 +151,42 @@ export function PredictionTable(props){
             {!props.isPreview && stats && (
                 <>
                     <OnoStats data={stats}/>
-                    <div id="checkbox" style={{alignSelf: 'flex-start', marginLeft: '10%', marginTop: '1rem'}}>
-                        <input type="checkbox" id="checkbox-untagged" checked={checked} onChange={handleCheckboxChange}/>
-                        <label htmlFor="checkbox-untagged" >Only display untagged</label>
+                    <div id="radio-group">
+                        <input 
+                            type="radio" 
+                            value="all" 
+                            id="all" 
+                            checked={filter === 'all'} 
+                            onChange={handleRadioChange}
+                        />
+                        <label htmlFor="all">Show all</label>
+                        <input 
+                            type="radio" 
+                            value="success" 
+                            id="success" 
+                            checked={filter === 'success'} 
+                            onChange={handleRadioChange}
+                        />
+                        <label htmlFor="success">Successful predictions</label>
+                        <input 
+                            type="radio" 
+                            value="failed" 
+                            id="failed" 
+                            checked={filter === 'failed'} 
+                            onChange={handleRadioChange}
+                        />
+                        <label htmlFor="failed">Failed predictions</label>
+                        <input 
+                            type="radio" 
+                            value="untagged" 
+                            id="untagged" 
+                            checked={filter === 'untagged'} 
+                            onChange={handleRadioChange}
+                        />
+                        <label htmlFor="untagged">Untagged predictions</label>
                     </div>
                 </>
             )}
-
-            {isLoading && <LoadingIcon/>}
 
             
             {data && displayData && (
@@ -192,9 +230,7 @@ export function PredictionTable(props){
                         })}
                     </tbody>
                 </table>
-                {isLoading && (
-                    <div>Loading...</div>
-                )}
+                {isLoading && <LoadingIcon/>}
                 {!isDataRemaining && !isPreview &&(
                     <div style={{paddingTop:'1rem'}}>No more data to show</div>
                 )}

@@ -22,7 +22,21 @@ export function PredictionTable(props){
     const [isLoading, setIsLoading] = useState(false);
     const [displayData, setDisplayData] = useState(null);
     const [filter, setFilter] = useState('all');
+    const [textFilter, setTextFilter] = useState('');
+    const [textFilteredData, setTextFilteredData] = useState('');
 
+
+
+    //filter with text input
+    useEffect(()=>{
+        if(!displayData){
+            return
+        }
+        setTextFilteredData(displayData.filter(line=>line.trueLabel === textFilter ||  line.predictedLabel === textFilter))
+    }, [displayData, data, textFilter])
+
+
+    //filter with radio
     useEffect(()=>{
         setDisplayData(data);
         switch(filter){
@@ -42,6 +56,7 @@ export function PredictionTable(props){
     }, [data, filter])
 
 
+    //fetch stats
     useEffect(()=>{
         async function loadStats(){
             const response = await fetch('/api/feedback/stats');
@@ -51,6 +66,7 @@ export function PredictionTable(props){
         loadStats();
     }, [])
   
+    //fetch data
     useEffect(()=>{
         async function fetchLatestData(){
             setIsLoading(true);
@@ -98,8 +114,7 @@ export function PredictionTable(props){
         }
     }, [isDataRemaining])
 
-
-
+    //check if page is fully scrolled
     useEffect(()=>{
         if(!isPreview){
             window.addEventListener('scroll',handleScroll);
@@ -135,6 +150,10 @@ export function PredictionTable(props){
         if(success === false){
             return 'prediction-fail'
         }
+    }
+
+    function handleTextChange(e){
+        setTextFilter(e.target.value);
     }
 
 
@@ -184,6 +203,7 @@ export function PredictionTable(props){
                             onChange={handleRadioChange}
                         />
                         <label htmlFor="untagged">Untagged predictions</label>
+                        <input type="text" value={textFilter} onChange={handleTextChange}/>
                     </div>
                 </>
             )}
@@ -200,7 +220,35 @@ export function PredictionTable(props){
                         </tr>
                     </thead>
                     <tbody>
-                        {displayData.map(function(line, index){
+                        {textFilter === '' && displayData.map(function(line, index){
+                            processClassname(line.success);
+                            return(
+                                <tr 
+                                    tabIndex="0"
+                                    onKeyUp={(e)=>handleEnterPress(e, line._id)}
+                                    onClick={()=>{handleLineClick(line._id)}}
+                                    key={index + line._id}     
+                                    className={processClassname(line.success)}
+                                    id={index === data.length-1 ? 'last' : null}
+                                >
+                                    <td>{index+1} {line.predictedLabel}</td>
+                                    <td>{line.trueLabel}</td>
+                                    <td>
+                                        <a 
+                                            onClick={handleLinkClick}
+                                            tabIndex="0"
+                                            href={`https://www.youtube.com/watch?v=${line.videoID}`}
+                                            target='_blank'
+                                            rel="noreferrer"
+                                            title={`https://www.youtube.com/watch?v=${line.videoID}`}
+                                        >
+                                            {line.videoID}
+                                        </a>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                        {textFilter !== '' && textFilteredData.map(function(line, index){
                             processClassname(line.success);
                             return(
                                 <tr 

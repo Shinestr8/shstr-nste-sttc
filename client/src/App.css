@@ -428,6 +428,16 @@ ul{
   font-size: 110%;
 }
 
+#radio-group{
+  align-self: flex-start;
+  margin-left: 10%;
+  margin-top: 1rem;
+}
+
+#radio-group label{
+  margin-right: 1rem;
+}
+
 @media screen and (max-width: 1200px){
 
   #prediction-table thead tr th:first-child{

@@ -157,8 +157,6 @@ export function Predict(){
                     <PredictionTable isPreview={true}/>
                 )}
 
-                {id && (JSON.stringify(id))}
-
                 {/* Error */}
                 {data && data.message!=="success" &&(
                     <div className="error-message">

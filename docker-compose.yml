@@ -1,4 +1,17 @@
 services:
+
+  nginx: 
+    image: nginx:1.20.2
+    container_name: nginx
+    depends_on:
+      - backend
+    restart: always
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - 3050:80
+      
   backend:
     image: onobot
     # command: sh -c "npm install && npm run server"

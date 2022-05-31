@@ -12,6 +12,6 @@ require('./initDB')();
 app.use(express.json());
 
 app.use('/api/feedback', feedbackRoute);
-app.use('/ai', aiRoute)
+app.use('/api/ai', aiRoute)
 
 app.listen(port, () => console.log(`ONOBOT listening on http://localhost:${port}!`))

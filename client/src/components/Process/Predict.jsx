@@ -100,7 +100,7 @@ export function Predict(){
             return
         }
         try{
-            const response = await fetch("/ai/predict?url="+youtubeURL);
+            const response = await fetch("/api/ai/predict?url="+youtubeURL);
             const newData = await response.json();
             setData(newData);
             setLoading(false);

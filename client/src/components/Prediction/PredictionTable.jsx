@@ -172,47 +172,60 @@ export function PredictionTable(props){
                 <>
                     <OnoStats data={stats}/>
                     <div id="radio-group">
-                        <input 
-                            type="radio" 
-                            value="all" 
-                            id="all" 
-                            checked={filter === 'all'} 
-                            onChange={handleRadioChange}
-                        />
-                        <label htmlFor="all">Show all</label>
-                        <input 
-                            type="radio" 
-                            value="success" 
-                            id="success" 
-                            checked={filter === 'success'} 
-                            onChange={handleRadioChange}
-                        />
-                        <label htmlFor="success">Successful predictions</label>
-                        <input 
-                            type="radio" 
-                            value="failed" 
-                            id="failed" 
-                            checked={filter === 'failed'} 
-                            onChange={handleRadioChange}
-                        />
-                        <label htmlFor="failed">Failed predictions</label>
-                        <input 
-                            type="radio" 
-                            value="untagged" 
-                            id="untagged" 
-                            checked={filter === 'untagged'} 
-                            onChange={handleRadioChange}
-                        />
-                        <label htmlFor="untagged">Untagged predictions</label>
-                        <span className="filter-text-group">
-                            <MagnifyingGlass/> 
-                            <input id="filter-text" type="text" value={textFilter} onChange={handleTextChange}/>
-                            {!textFilter &&(
-                                <label htmlFor="filter-text">
-                                    Search a genre
-                                </label>
-                            )}
-                        </span>
+                        <div>
+                            <input 
+                                type="radio" 
+                                value="all" 
+                                id="all" 
+                                checked={filter === 'all'} 
+                                onChange={handleRadioChange}
+                            />
+                            <label htmlFor="all">Show all</label>
+                        </div>
+                        <div>
+                            <input 
+                                type="radio" 
+                                value="success" 
+                                id="success" 
+                                checked={filter === 'success'} 
+                                onChange={handleRadioChange}
+                            />
+                            <label htmlFor="success">Successful predictions</label>
+                        </div>
+                        
+                        <div>
+                            <input 
+                                type="radio" 
+                                value="failed" 
+                                id="failed" 
+                                checked={filter === 'failed'} 
+                                onChange={handleRadioChange}
+                            />
+                            <label htmlFor="failed">Failed predictions</label>
+                        </div>
+                        <div>
+                            <input 
+                                type="radio" 
+                                value="untagged" 
+                                id="untagged" 
+                                checked={filter === 'untagged'} 
+                                onChange={handleRadioChange}
+                            />
+                            <label htmlFor="untagged">Untagged predictions</label>
+                        </div>
+                        
+                        <div>
+                            <span className="filter-text-group">
+                                <MagnifyingGlass/> 
+                                <input id="filter-text" type="text" value={textFilter} onChange={handleTextChange}/>
+                                {!textFilter &&(
+                                    <label htmlFor="filter-text">
+                                        Search a genre
+                                    </label>
+                                )}
+                            </span>
+                        </div>
+                        
                         
                     </div>
                 </>

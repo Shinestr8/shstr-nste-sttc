@@ -430,8 +430,15 @@ ul{
 
 #radio-group{
   align-self: flex-start;
+  display: flex;
+  width: 80%;
+  flex-direction: row;
   margin-left: 10%;
   margin-top: 1rem;
+}
+
+#radio-group div:last-child{
+  margin-left: auto;
 }
 
 #radio-group label{
@@ -447,11 +454,21 @@ ul{
   position: absolute;
   display: flex;
   top: 0px;
-  left: 1rem;
+  transition-property: top;
+  transition-duration: .5s;
+  left: 1.4rem;
+}
+
+.filter-text-group #filter-text:focus+label{
+  top: -1rem;
+  font-size: 70%;
+  transition-property: top;
+  transition-duration: .5s;
 }
 
 .filter-text-group .icon{
   width: 1rem;
+  margin-left: .4rem;
 }
 
 #filter-text{
@@ -532,6 +549,17 @@ ul{
     width: 100%;
   }
 
+  #radio-group{
+    flex-direction: column;
+    margin-left: 0%;
+    box-sizing: content-box;
+  }
+
+  #radio-group div:last-child{
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+  
 }
 
 

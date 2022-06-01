@@ -438,6 +438,29 @@ ul{
   margin-right: 1rem;
 }
 
+.filter-text-group{
+  position: relative;
+  display: inline-flex;
+}
+
+.filter-text-group label{
+  position: absolute;
+  display: flex;
+  top: 0px;
+  left: 1rem;
+}
+
+.filter-text-group .icon{
+  width: 1rem;
+}
+
+#filter-text{
+  background-color: transparent;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid var(--main-dark);
+}
+
 @media screen and (max-width: 1200px){
 
   #prediction-table thead tr th:first-child{

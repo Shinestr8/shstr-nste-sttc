@@ -3,6 +3,7 @@ import useWindowDimensions from "../tool/windowDimensions";
 import { useNavigate } from "react-router-dom";
 import { OnoStats } from "./OnoStats";
 import { LoadingIcon } from "../General/Icons/LoadingIcon";
+import { MagnifyingGlass } from "../General/Icons/MagnifyingGlass";
 
 
 export function PredictionTable(props){
@@ -150,7 +151,7 @@ export function PredictionTable(props){
         if(success === false){
             return 'prediction-fail'
         }
-    }
+    }   
 
     function handleTextChange(e){
         setTextFilter(e.target.value);
@@ -203,7 +204,16 @@ export function PredictionTable(props){
                             onChange={handleRadioChange}
                         />
                         <label htmlFor="untagged">Untagged predictions</label>
-                        <input type="text" value={textFilter} onChange={handleTextChange}/>
+                        <span className="filter-text-group">
+                            <MagnifyingGlass/> 
+                            <input id="filter-text" type="text" value={textFilter} onChange={handleTextChange}/>
+                            {!textFilter &&(
+                                <label htmlFor="filter-text">
+                                    Search a genre
+                                </label>
+                            )}
+                        </span>
+                        
                     </div>
                 </>
             )}

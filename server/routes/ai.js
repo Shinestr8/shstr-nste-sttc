@@ -21,7 +21,7 @@ router.get('/predict', (req, res) => {
         return
     }
     let result;
-    const python = spawn('python', ['./python/predict.py', url]);
+    const python = spawn('python3', ['./python/predict.py', url]);
     python.stdout.on('data', function(data){
         rawString = data.toString();
     })

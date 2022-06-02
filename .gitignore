@@ -11,3 +11,4 @@ npm-debug.log
 test.py
 .env
 nginx/build
+nginx/cert

@@ -10,11 +10,10 @@ services:
       context: ./nginx
       dockerfile: Dockerfile
     ports:
-      - 3050:80
+      - 443:443
       
   backend:
     image: onobot
-    # command: sh -c "npm install && npm run server"
     container_name: backend
     build: 
       context: ./server
@@ -22,6 +21,7 @@ services:
     ports:
       - 5000:5000
     working_dir: /app
+    restart: always
     environment:
       PORT: 5000
       MONGO_URI: mongodb://${ONO_MONGO_ROOT}:${ONO_MONGO_PASSWORD}@onobot_mongo_db:27017/my_db?authSource=admin
@@ -33,6 +33,7 @@ services:
     logging:
       driver: none
     image: mongo:5.0.7
+    restart: always
     volumes:
       - ono_mongo_volume:/data/db
     ports:

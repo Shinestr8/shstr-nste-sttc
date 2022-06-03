@@ -33,7 +33,15 @@ export function PredictionTable(props){
         if(!displayData){
             return
         }
-        setTextFilteredData(displayData.filter(line=>line.trueLabel === textFilter.toLowerCase() ||  line.predictedLabel === textFilter.toLowerCase()))
+        setTextFilteredData(displayData.filter(function(line){
+            if(line.trueLabel !== undefined){
+                return (line.trueLabel.includes(textFilter.toLowerCase()));
+            }
+            return 0
+            
+            // return line;
+        }))
+        // setTextFilteredData(displayData.filter(line=>line.trueLabel.includes(textFilter.toLowerCase()) ||  line.predictedLabel.includes(textFilter.toLowerCase())))
     }, [displayData, data, textFilter])
 
 
@@ -232,7 +240,7 @@ export function PredictionTable(props){
             )}
 
             
-            {data && displayData && (
+            {data && displayData && textFilter === '' &&  (
                 <div id="table-container" ref={ref}>
                 <table id="prediction-table">
                     <thead>
@@ -243,35 +251,7 @@ export function PredictionTable(props){
                         </tr>
                     </thead>
                     <tbody>
-                        {textFilter === '' && displayData.map(function(line, index){
-                            processClassname(line.success);
-                            return(
-                                <tr 
-                                    tabIndex="0"
-                                    onKeyUp={(e)=>handleEnterPress(e, line._id)}
-                                    onClick={()=>{handleLineClick(line._id)}}
-                                    key={index + line._id}     
-                                    className={processClassname(line.success)}
-                                    id={index === data.length-1 ? 'last' : null}
-                                >
-                                    <td>{index+1} {line.predictedLabel}</td>
-                                    <td>{line.trueLabel}</td>
-                                    <td>
-                                        <a 
-                                            onClick={handleLinkClick}
-                                            tabIndex="0"
-                                            href={`https://www.youtube.com/watch?v=${line.videoID}`}
-                                            target='_blank'
-                                            rel="noreferrer"
-                                            title={`https://www.youtube.com/watch?v=${line.videoID}`}
-                                        >
-                                            {line.videoID}
-                                        </a>
-                                    </td>
-                                </tr>
-                            )
-                        })}
-                        {textFilter !== '' && textFilteredData.map(function(line, index){
+                        {displayData.map(function(line, index){
                             processClassname(line.success);
                             return(
                                 <tr 
@@ -306,6 +286,53 @@ export function PredictionTable(props){
                     <div style={{paddingTop:'1rem'}}>No more data to show</div>
                 )}
             </div>
+            )}
+
+            {textFilter !== '' && textFilteredData.length === 0 && (
+                <div>No data matching genre <strong>{textFilter}</strong></div>
+            )}
+            {data && displayData && textFilteredData.length!==0 && textFilter!=='' && (
+                <div id="table-container" ref={ref}>
+                    <table id="prediction-table">
+                    <thead>
+                        <tr>
+                            <th>Predicted label</th>
+                            <th>True label</th>
+                            <th>Song URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {textFilter !== '' && textFilteredData.map(function(line, index){
+                            processClassname(line.success);
+                            return(
+                                <tr 
+                                    tabIndex="0"
+                                    onKeyUp={(e)=>handleEnterPress(e, line._id)}
+                                    onClick={()=>{handleLineClick(line._id)}}
+                                    key={index + line._id}     
+                                    className={processClassname(line.success)}
+                                    id={index === data.length-1 ? 'last' : null}
+                                >
+                                    <td>{index+1} {line.predictedLabel}</td>
+                                    <td>{line.trueLabel}</td>
+                                    <td>
+                                        <a 
+                                            onClick={handleLinkClick}
+                                            tabIndex="0"
+                                            href={`https://www.youtube.com/watch?v=${line.videoID}`}
+                                            target='_blank'
+                                            rel="noreferrer"
+                                            title={`https://www.youtube.com/watch?v=${line.videoID}`}
+                                        >
+                                            {line.videoID}
+                                        </a>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                    </table>
+                </div>
             )}
             
             </div>

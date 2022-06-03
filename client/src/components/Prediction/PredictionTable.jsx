@@ -33,7 +33,7 @@ export function PredictionTable(props){
         if(!displayData){
             return
         }
-        setTextFilteredData(displayData.filter(line=>line.trueLabel === textFilter ||  line.predictedLabel === textFilter))
+        setTextFilteredData(displayData.filter(line=>line.trueLabel === textFilter.toLowerCase() ||  line.predictedLabel === textFilter.toLowerCase()))
     }, [displayData, data, textFilter])
 
 

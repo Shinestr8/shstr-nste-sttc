@@ -1,26 +1,22 @@
-import { useEffect, useState, useRef, useCallback } from "react"
-import useWindowDimensions from "../tool/windowDimensions";
+import { useEffect, useState, useRef} from "react"
 import { useNavigate } from "react-router-dom";
 import { OnoStats } from "./OnoStats";
-import { LoadingIcon } from "../General/Icons/LoadingIcon";
+
 import { MagnifyingGlass } from "../General/Icons/MagnifyingGlass";
+import { useMemo } from "react";
 
 
 export function PredictionTable(props){
 
-    const isPreview = props.isPreview;
-
     const navigate = useNavigate();
     const ref = useRef(null);
 
-    const {height} = useWindowDimensions()
-
-
-    const [data, setData] = useState(null);
-    const [stats, setStats] = useState(null);
-    const [count, setCount] = useState(0);
-    const [isDataRemaining, setIsDataRemaining] = useState(true);
-    const [isLoading, setIsLoading] = useState(false);
+    const data = useMemo(()=>{
+        return [{"data":{"guess":[{"name":"metal","count":58},{"name":"rock","count":19},{"name":"classical","count":16},{"name":"jazz","count":14}],"higherGuess":"metal","higherCount":58,"total":107,"message":"success","rawData":[1,1,1,1,1,1,5,1,1,1,1,1,1,5,1,5,5,5,5,1,1,5,5,5,5,5,1,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,9,6,6,6,6,6,6,6,6,9,6,6,6,6,6,6,6,6,6,6,9,6,9,9,6,9,9,6,9,6,9,6,9,9,9,9,9,9,9,9,9,6,6,6,6,6]},"_id":"62b99e3abf813517a3bf64e0","predictedLabel":"metal","videoID":"fsPMu_zjSMc","__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e42940e51c713485db9b5","predictedLabel":"classical","trueLabel":"classical","videoID":"l0GN40EL1VU","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e41750e51c713485db9b3","predictedLabel":"metal","trueLabel":"metal","videoID":"UCxgbOBVSfM","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e405a78dfbd80f24b02b4","predictedLabel":"classical","trueLabel":"classical","videoID":"AVChO2jMQM4","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e3fc578dfbd80f24b02a3","predictedLabel":"pop","trueLabel":"pop","videoID":"djV11Xbc914","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e3f2778dfbd80f24b029e","predictedLabel":"country","trueLabel":"country","videoID":"1vrEljMfXYo","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e3e3878dfbd80f24b025c","predictedLabel":"classical","trueLabel":"classical","videoID":"sbTVZMJ9Z2I","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e3dcd78dfbd80f24b0257","predictedLabel":"classical","trueLabel":"classical","videoID":"CvFH_6DNRCY","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e3d8478dfbd80f24b0255","predictedLabel":"rock","trueLabel":"rock","videoID":"dlejA2rlF3I","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e3d3d78dfbd80f24b0253","predictedLabel":"pop","trueLabel":"pop","videoID":"ZEKUG4EJmCs","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e3cf278dfbd80f24b0248","predictedLabel":"pop","trueLabel":"hiphop","videoID":"drssgbhggaQ","success":false,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0ee496059a87433dc368","predictedLabel":"disco","trueLabel":"rock","videoID":"htgr3pvBr-I","success":false,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0ea896059a87433dc366","predictedLabel":"country","trueLabel":"pop","videoID":"XEjLoHdbVeE","success":false,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0deb96059a87433dc356","predictedLabel":"pop","trueLabel":"disco","videoID":"6JhVo2zS8hU","success":false,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0da696059a87433dc354","predictedLabel":"hiphop","trueLabel":"reggae","videoID":"NUn3lj64oNw","success":false,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0d7196059a87433dc352","predictedLabel":"hiphop","trueLabel":"hiphop","videoID":"eviqX3QXd-s","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0cd696059a87433dc350","predictedLabel":"hiphop","trueLabel":"hiphop","videoID":"NwIxIAztiag","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0c4e96059a87433dc348","predictedLabel":"pop","trueLabel":"pop","videoID":"RzEBEKMlGyA","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0c0696059a87433dc33e","predictedLabel":"rock","trueLabel":"rock","videoID":"Gym95cmKR-g","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0bb596059a87433dc33c","predictedLabel":"classical","trueLabel":"jazz","videoID":"A3yCcXgbKrE","success":false,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0b8796059a87433dc33a","predictedLabel":"jazz","trueLabel":"jazz","videoID":"TmIwm5RElRs","success":true,"__v":0}]
+    }, [])
+    const stats = useMemo(()=>{
+        return {"total":21,"goodPred":14,"untagged":1};
+    }, [])
     const [displayData, setDisplayData] = useState(null);
     const [filter, setFilter] = useState('all');
     const [textFilter, setTextFilter] = useState('');
@@ -38,10 +34,7 @@ export function PredictionTable(props){
                 return (line.trueLabel.includes(textFilter.toLowerCase()));
             }
             return 0
-            
-            // return line;
         }))
-        // setTextFilteredData(displayData.filter(line=>line.trueLabel.includes(textFilter.toLowerCase()) ||  line.predictedLabel.includes(textFilter.toLowerCase())))
     }, [displayData, data, textFilter])
 
 
@@ -64,76 +57,6 @@ export function PredictionTable(props){
         }
     }, [data, filter])
 
-
-    //fetch stats
-    useEffect(()=>{
-        async function loadStats(){
-            const response = await fetch('/api/feedback/stats');
-            const result = await response.json();
-            setStats(result);
-        }
-        loadStats();
-    }, [])
-  
-    //fetch data
-    useEffect(()=>{
-        async function fetchLatestData(){
-            setIsLoading(true);
-            const batchSize = 10;
-            const response = await fetch(`/api/feedback?page=0&batchSize=${batchSize}`);
-            const result = await response.json();
-            setData(result);
-            setIsLoading(false);
-        }  
-
-        async function fetchBatchData(){
-            setIsLoading(true);
-            const batchSize=20;
-            const response = await fetch(`/api/feedback?page=${count}&batchSize=${batchSize}`);
-            const result = await response.json();
-            if(result.length < batchSize){
-            setIsDataRemaining(false);
-            }
-            if(count === 0){
-            setData(result);
-            setIsLoading(false);
-            }
-            else {
-            setData((data) => [...data, ...result]);
-            setIsLoading(false);
-            }
-            if(ref.current && ref.current.offsetHeight < height && result.length === batchSize){
-                setCount(c => c +1);
-            }
-        }
-        if(!isPreview){
-            fetchBatchData()
-        } else {
-            fetchLatestData()
-        }
-    }, [count, height, isPreview])
-
-
-
-    const handleScroll = useCallback(function(e){
-    const el = e.target.documentElement;
-    const bottom = el.scrollHeight - el.scrollTop - 1 < el.clientHeight;
-    if (bottom && isDataRemaining) {
-        setCount(c => c +1);
-        }
-    }, [isDataRemaining])
-
-    //check if page is fully scrolled
-    useEffect(()=>{
-        if(!isPreview){
-            window.addEventListener('scroll',handleScroll);
-            return(function(){
-                window.removeEventListener("scroll", handleScroll)
-            })
-        }
-        
-    }, [handleScroll, isPreview])
-    
       
     function handleLineClick(id){
         navigate(`/prediction/${id}`);
@@ -281,10 +204,6 @@ export function PredictionTable(props){
                         })}
                     </tbody>
                 </table>
-                {isLoading && <LoadingIcon/>}
-                {!isDataRemaining && !isPreview &&(
-                    <div style={{paddingTop:'1rem'}}>No more data to show</div>
-                )}
             </div>
             )}
 

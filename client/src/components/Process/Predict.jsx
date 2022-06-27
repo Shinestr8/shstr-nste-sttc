@@ -12,9 +12,9 @@ import { PredictionTable } from "../Prediction/PredictionTable";
 
 export function Predict(){
 
-    const [youtubeURL, setYoutubeURL] = useState("");
-    const [processedURL, setProcessURL] = useState("");
-    const [data, setData] = useState(null);
+    const [youtubeURL, setYoutubeURL] = useState("https://www.youtube.com/watch?v=fsPMu_zjSMc");
+    const [processedURL, setProcessURL] = useState("https://www.youtube.com/watch?v=fsPMu_zjSMc");
+    const [data, setData] = useState({"guess":[{"name":"metal","count":58},{"name":"rock","count":19},{"name":"classical","count":16},{"name":"jazz","count":14}],"higherGuess":"metal","higherCount":58,"total":107,"message":"success","rawData":[1,1,1,1,1,1,5,1,1,1,1,1,1,5,1,5,5,5,5,1,1,5,5,5,5,5,1,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,9,6,6,6,6,6,6,6,6,9,6,6,6,6,6,6,6,6,6,6,9,6,9,9,6,9,9,6,9,6,9,6,9,9,9,9,9,9,9,9,9,6,6,6,6,6]});
     // const [data, setData] = useState({"guess":[{"name":"hiphop","count":134},{"name":"pop","count":44},{"name":"classical","count":31},{"name":"jazz","count":17},{"name":"reggae","count":8},{"name":"country","count":3},{"name":"disco","count":2},{"name":"metal","count":2},{"name":"blues","count":1}],"higherGuess":"hiphop","higherCount":134,"total":242,"message":"success","rawData":[5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,8,4,4,8,7,4,4,7,7,7,4,7,4,8,4,8,4,4,4,4,4,4,7,8,7,4,4,4,7,4,4,4,4,4,4,4,4,4,4,7,4,7,7,7,8,2,8,7,4,4,4,4,4,4,4,7,7,4,7,4,7,7,4,7,4,4,4,4,2,4,7,7,4,4,4,4,7,4,4,4,4,4,4,7,4,4,4,4,4,4,7,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,7,7,4,4,7,4,5,5,5,5,5,7,5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,1,1,4,6,4,4,6,4,4,2,4,4,0,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,7,8,4,7,7,7,7,7,7,7,7,7,4,7,7,4,7,7,7,7,1,4,5,5,1,1,1,1]})
     const [loading, setLoading] = useState(false);
     const [isModalShowing, setShowModal] = useState(false);
@@ -107,7 +107,7 @@ export function Predict(){
             saveData(newData, videoID);
         }
         catch(e){
-            setData({message: "An error occured, please try again later"})
+            setData({message: "This is a static demonstration, predictions will not work"})
             setLoading(false);  
         }
     }

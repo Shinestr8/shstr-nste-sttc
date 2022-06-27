@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Histogram } from "../Charts/Histogram";
 import { GenreRadarChart } from "../Charts/GenreRadarChart";
-import { LoadingIcon } from "../General/Icons/LoadingIcon";
+
 import { CircleCheck } from "../General/Icons/CircleCheck";
 import { CircleXMark } from "../General/Icons/CircleXMark";
 import { Modal } from "../General/Modal/Modal";
@@ -13,7 +13,7 @@ export function Prediction(){
 
     const {id} = useParams();
     const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(false);
+    
     const [isModalShowing, setShowModal] = useState(false);
     const [showToaster, setShowToaster] = useState(false);
 
@@ -35,29 +35,21 @@ export function Prediction(){
         setShowModal(prev => !prev);
     }
 
+    
+
     useEffect(()=>{
-        async function fetchLatestData(){
-            setLoading(true);
-            const response = await fetch(`/api/feedback/id/${id}`);
-            const result = await response.json();
-            setData(result);
-            setLoading(false);
+        const allData = [{"data":{"guess":[{"name":"metal","count":58},{"name":"rock","count":19},{"name":"classical","count":16},{"name":"jazz","count":14}],"higherGuess":"metal","higherCount":58,"total":107,"message":"success","rawData":[1,1,1,1,1,1,5,1,1,1,1,1,1,5,1,5,5,5,5,1,1,5,5,5,5,5,1,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9,9,6,6,6,6,6,6,6,6,9,6,6,6,6,6,6,6,6,6,6,9,6,9,9,6,9,9,6,9,6,9,6,9,9,9,9,9,9,9,9,9,6,6,6,6,6]},"_id":"62b99e3abf813517a3bf64e0","predictedLabel":"metal","videoID":"fsPMu_zjSMc","__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e42940e51c713485db9b5","predictedLabel":"classical","trueLabel":"classical","videoID":"l0GN40EL1VU","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e41750e51c713485db9b3","predictedLabel":"metal","trueLabel":"metal","videoID":"UCxgbOBVSfM","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e405a78dfbd80f24b02b4","predictedLabel":"classical","trueLabel":"classical","videoID":"AVChO2jMQM4","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e3fc578dfbd80f24b02a3","predictedLabel":"pop","trueLabel":"pop","videoID":"djV11Xbc914","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e3f2778dfbd80f24b029e","predictedLabel":"country","trueLabel":"country","videoID":"1vrEljMfXYo","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e3e3878dfbd80f24b025c","predictedLabel":"classical","trueLabel":"classical","videoID":"sbTVZMJ9Z2I","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e3dcd78dfbd80f24b0257","predictedLabel":"classical","trueLabel":"classical","videoID":"CvFH_6DNRCY","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e3d8478dfbd80f24b0255","predictedLabel":"rock","trueLabel":"rock","videoID":"dlejA2rlF3I","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e3d3d78dfbd80f24b0253","predictedLabel":"pop","trueLabel":"pop","videoID":"ZEKUG4EJmCs","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627e3cf278dfbd80f24b0248","predictedLabel":"pop","trueLabel":"hiphop","videoID":"drssgbhggaQ","success":false,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0ee496059a87433dc368","predictedLabel":"disco","trueLabel":"rock","videoID":"htgr3pvBr-I","success":false,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0ea896059a87433dc366","predictedLabel":"country","trueLabel":"pop","videoID":"XEjLoHdbVeE","success":false,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0deb96059a87433dc356","predictedLabel":"pop","trueLabel":"disco","videoID":"6JhVo2zS8hU","success":false,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0da696059a87433dc354","predictedLabel":"hiphop","trueLabel":"reggae","videoID":"NUn3lj64oNw","success":false,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0d7196059a87433dc352","predictedLabel":"hiphop","trueLabel":"hiphop","videoID":"eviqX3QXd-s","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0cd696059a87433dc350","predictedLabel":"hiphop","trueLabel":"hiphop","videoID":"NwIxIAztiag","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0c4e96059a87433dc348","predictedLabel":"pop","trueLabel":"pop","videoID":"RzEBEKMlGyA","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0c0696059a87433dc33e","predictedLabel":"rock","trueLabel":"rock","videoID":"Gym95cmKR-g","success":true,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0bb596059a87433dc33c","predictedLabel":"classical","trueLabel":"jazz","videoID":"A3yCcXgbKrE","success":false,"__v":0},{"data":{"rawData":[],"guess":[]},"_id":"627d0b8796059a87433dc33a","predictedLabel":"jazz","trueLabel":"jazz","videoID":"TmIwm5RElRs","success":true,"__v":0}]
+        for(let i =0; i<allData.length; ++i){
+            if(allData[i]._id === id){
+                setData(allData[i]);
+                return;
+            }
         }
-        fetchLatestData()
     }, [id])
 
 
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-    
-    if(loading){
-        return(
-            <div style={{textAlign:"center", padding: "1rem"}}>
-                <LoadingIcon/>
-            </div>
-            
-        )
     }
 
     if(data && data.data.rawData.length === 0){

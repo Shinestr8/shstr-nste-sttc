@@ -1,6 +1,6 @@
 import './App.css';
 import { Predict } from "./components/Process/Predict";
-import {BrowserRouter, Route, Routes} from "react-router-dom"
+import {Route, Routes, HashRouter} from "react-router-dom"
 import { Page } from "./components/Page";
 import { About } from './components/About/About';
 import { Test } from './components/Test';
@@ -10,7 +10,7 @@ import { Prediction } from './components/Prediction/Prediction';
 function App() {
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Page/>}>
           <Route path="/" element={<Predict/>}/>
@@ -20,7 +20,7 @@ function App() {
         </Route>
         <Route path="test" element={<Test><div>Hello</div><div>World</div></Test>}/>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 

@@ -17,6 +17,18 @@ html, body, #root{
   word-wrap: break-word;
 }
 
+.disclaimer{
+  background-color: #ff96ff;
+  border: 1px solid var(--main-dark);
+  margin:auto;
+  width: 80%;
+  font-weight: 1000;
+  color: #FFFFFF;
+  box-sizing: border-box;
+  padding: 1rem;
+  border-radius: 15px;
+}
+
 #logo{
   box-sizing: border-box;
   height: 100%;
@@ -424,6 +436,7 @@ ul{
   display: flex;
   box-sizing: border-box;
   justify-content: space-around;
+  margin-top: 1rem;
   padding: 1rem;
   font-size: 110%;
 }

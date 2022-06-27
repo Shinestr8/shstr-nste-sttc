@@ -10,7 +10,7 @@ import { Prediction } from './components/Prediction/Prediction';
 function App() {
 
   return (
-    <HashRouter>
+    <HashRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/" element={<Page/>}>
           <Route path="/" element={<Predict/>}/>

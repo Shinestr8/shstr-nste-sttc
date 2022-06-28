@@ -25,7 +25,7 @@ export function Page(){
                 </div>
             </header>
             <article id="main-content">
-                <p className="disclaimer">Ceci est une version "statique" de la plateforme dans un but de démonstration de l'interface, la réel application coûtant trop cher à herberger du à la puissance de calcul requise par les calculs d'intelligence artificielle.</p>
+                <p className="disclaimer">Ceci est une version "statique" de la plateforme dans un but de démonstration de l'interface uniquement, la réelle application coûtant trop cher à héberger dû à la puissance de calcul requise par l'intelligence artificielle.</p>
                 <Outlet/>
             </article>
             

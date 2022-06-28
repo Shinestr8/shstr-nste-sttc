@@ -12,3 +12,4 @@ test.py
 .env
 nginx/build
 nginx/cert
+*/build

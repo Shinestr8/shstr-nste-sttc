@@ -86,11 +86,6 @@ export function About(){
                         </div>
                 </section>
 
-                <section>
-                    <h3>Why the name "ONOBOT" ?</h3>
-                    <p>Good question.</p>
-                </section>
-
             </div>
         </div>
     )
